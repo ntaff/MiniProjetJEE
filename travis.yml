@@ -16,8 +16,6 @@ deploy:
 addons:
   sonarqube:
     token:
-      secure: 898c9eb403340d03d4cb897ba4b1b799cbd3a643 # encrypted value of your token
+      secure: e22218a1c091001d3a67890495f0a1e613468225 # encrypted value of your token
 script:
-  - sudo ant install-deps
-  - ant test
-  - sonar-scanner
+#Soon
