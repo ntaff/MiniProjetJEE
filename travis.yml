@@ -1,7 +1,8 @@
 language: java
+mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+mvn test -B
 dist: trusty
 sudo: required
-install: ant download-deps
 notifications:
   # Email notifications are disabled to not annoy anybody.
   email: false 
