@@ -14,6 +14,8 @@ public class DAOClient
     
     public void addOrder(int customerID, String product, int quantity, String fCompany)
     {
+        String orderSql = "INSERT INTO PURCHASE_ORDER(?,?,?,?,?,?,?,?)";
+        
         
     }
     
