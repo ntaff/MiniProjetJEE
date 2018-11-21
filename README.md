@@ -1,5 +1,7 @@
 # MiniProjetJEE
 
+[![Build Status](https://travis-ci.com/ntaff/MiniProjetJEE.svg?branch=master)](https://travis-ci.com/ntaff/MiniProjetJEE)
+
 
 About the authors                                                  {#about}
 -----------------
