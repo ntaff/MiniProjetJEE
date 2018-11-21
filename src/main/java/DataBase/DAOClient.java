@@ -12,8 +12,6 @@ public class DAOClient
         this.myDataSource = dataSource;
     }
     
-    
-    
     public void addOrder(int customerID, String product, int quantity, String fCompany)
     {
         
