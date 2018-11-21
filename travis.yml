@@ -1,0 +1,21 @@
+language: java
+dist: trusty
+sudo: required
+install: ant download-deps
+notifications:
+  # Email notifications are disabled to not annoy anybody.
+  email: false 
+  
+deploy:
+  provider: heroku
+  api_key:
+    secure: 91ee767feb734b6982d6afd1cf4456be
+  app: miniprojetjee
+  
+# Run SonarQube on code
+addons:
+  sonarqube:
+    token:
+      secure: e22218a1c091001d3a67890495f0a1e613468225 # encrypted value of your token
+script:
+#Soon
