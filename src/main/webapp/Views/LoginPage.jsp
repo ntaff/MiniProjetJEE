@@ -3,7 +3,6 @@
     Created on : 21 nov. 2018, 16:27:05
     Author     : Taffoureau
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,13 +15,10 @@
         <title>Connexion</title>
     </head>
     <body>
-
-
-<div class="container login-container">
+        <div class="container login-container">
             <div class="row">
                 <div class="col-md-6 login-form-1">
-                    <h3>Administrateur</h3>
-                    
+                    <h3>Administrateur</h3>  
                         <div class="form-group">
                             <input type="text" class="form-control" name="login" placeholder="Nom d'utilisateur *" value="" />
                         </div>
@@ -31,11 +27,7 @@
                         </div>
                         <div class="form-group">
                             <input type="submit" name="actionAdmin" class="btnSubmitAdmin" value="Connexion" />
-                        </div>
-                        <div class="form-group">
-                            <a href="#" class="btnForgetPwd">Mot de passe oublié ?</a>
-                        </div>
-                    
+                        </div>              
                 </div>
                 <div class="col-md-6 login-form-2">
                     <h3>Client</h3>
@@ -47,9 +39,6 @@
                         </div>
                         <div class="form-group">
                             <input type="submit" name="actionClient" class="btnSubmitClient" value="Connexion" />
-                        </div>
-                        <div class="form-group">
-                            <a href="#" class="btnForgetPwd" value="Login">Mot de passe oublié ?</a>
                         </div>
                     </form>
                 </div>
