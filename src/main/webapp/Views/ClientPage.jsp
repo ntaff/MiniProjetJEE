@@ -12,6 +12,7 @@
         <title>Panel du client</title>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link rel="stylesheet" type="text/css" href="Css/ClientPage.css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     </head>
     <body>
@@ -20,7 +21,7 @@
                 <div class="col-md-12">
                     <h4>Coordonnées</h4>
                     <div class="table-responsive">
-                        <table id="mytable" class="table table-bordred table-striped">
+                        <table id="coord" class="table table-striped">
                             <thead>
                                 <th>Prénom</th>
                                 <th>Nom</th>
@@ -40,7 +41,7 @@
                     </div>
                     <h4>Bons de commande</h4>
                     <div class="table-responsive">
-                        <table id="mytable" class="table table-bordred table-striped">
+                        <table id="bons" class="table table-bordred table-striped">
                             <thead>
                                 <th>Nom du produit</th>
                                 <th>Quantité</th>
@@ -163,7 +164,7 @@
                     </div>
                     <div class="modal-footer ">
                         <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Oui</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
                     </div>
                 </div>
             </div>
