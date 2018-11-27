@@ -113,8 +113,12 @@
                         <div class="form-group">
                             <input class="form-control " type="text" placeholder="Quantité">
                         </div>
-                        <div class="form-group">
-                            <textarea rows="2" class="form-control" placeholder="Fournisseur"></textarea>
+                        <div class="control-group">
+                          <label for="fournisseur">Fournisseur</label>
+                          <select id="selectfournisseur"class="form-control" name="fournisseur">
+                            <option value="0" >Colissimo</option>
+                            <option value="1" >DHL</option>
+                          </select>
                         </div>
                     </div>
                         <div class="modal-footer ">
