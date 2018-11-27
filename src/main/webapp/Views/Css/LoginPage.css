@@ -13,7 +13,6 @@ body, html {
     background-repeat: no-repeat;
     background-image: linear-gradient(rgb(200, 200, 200), rgb(60, 60, 60));
 }
-
 .login-container{
     margin-top: 5%;
     margin-bottom: 5%;
