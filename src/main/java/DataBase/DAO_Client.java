@@ -1,4 +1,4 @@
-package DAO;
+package DataBase;
 
 //import Structures.ClientInfo;
 import javax.sql.DataSource;
@@ -14,10 +14,7 @@ public class DAO_Client
     
     
     
-    public void addOrder(int customerID, String product, int quantity, String fCompany)
-    {
-        
-    }
+    
     
     public void editOrder(int orderNumber, String product, int quantity)
     {
