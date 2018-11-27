@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Tests;
+package DataBase;
 
 /**
  *
  * @author Taffoureau
  */
-public class Test_Controler {
+public class DAO_Admin {
     
 }

@@ -27,12 +27,29 @@ public class Controler extends HttpServlet {
             throws ServletException, IOException 
     {
         response.setContentType("text/html;charset=UTF-8");
+        // Partie client
         if (actionIsClient(request, "Connexion")) 
         {
-            // Ici on lance alors la connexion et la page adequate
-        } else if (actionIsAdmin(request, "Connexion"))
+           this.newConnect(request, response, true);
+        } else if (actionIsClient(request, "Ajout")) {
+            this.addCommand(request, response);
+        } else if (actionIsClient(request, "Modifier")) {
+            this.editCommand(request, response);
+        } else if (actionIsClient(request, "Supprimer")){
+            this.deleteCommand(request, response);
+        }
+        // Partie fournisseur
+        else if (actionIsAdmin(request, "Connexion"))
         {
-            // Ici on lance alors la connexion admin er la page adequate
+           this.newConnect(request, response, false);
+        }else if (actionIsAdmin(request, "ChiffreAffaire")) {
+            
+        }else if (actionIsAdmin(request, "Ajout")) {
+            this.addProduct(request, response);
+        } else if (actionIsAdmin(request, "Modifier")) {
+            this.editProduct(request, response);
+        } else if (actionIsAdmin(request, "Supprimer")){
+            this.deleteProduct(request, response);
         }
        
     }
@@ -83,6 +100,7 @@ public class Controler extends HttpServlet {
         HttpSession session = request.getSession();
         String login = (String) session.getAttribute("login");
         String pwd = (String) session.getAttribute("mdp");
+        // Ici ajout de la condition de validité de login et pwd
         if (isAd)
         {
             showView("AdminPage.jsp", request, response);
@@ -91,7 +109,75 @@ public class Controler extends HttpServlet {
         }
         
     }
-
+    // Partie lié au client 
+    
+    /**
+     * Fonction permettant de géré l'ajout d'une commande
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
+    private void addCommand(HttpServletRequest request, HttpServletResponse response )
+             throws ServletException, IOException
+    {
+        HttpSession session = request.getSession();
+        String product = (String) session.getAttribute("produit");
+        String company = (String) session.getAttribute("fournisseur");
+        int quantite = (int) session.getAttribute("quantite");
+        
+    }
+    
+    private void editCommand(HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        
+    }
+    
+    private void deleteCommand(HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        
+    }
+    
+    // Partie lié a l'administrateur
+    
+    private void view(HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        HttpSession session = request.getSession(); 
+        String choix = (String) session.getAttribute("choix");
+        if (choix == "Géo")
+        {
+           // recupére les chiffre selon la zonne  
+        } else if (choix == "Client"){
+           // récupére les chiffre d'affaire selon le client  
+        } else {
+           //  récupére les chiffre d'affaire selon les articles
+        }
+    }
+    
+    private void addProduct(HttpServletRequest request, HttpServletResponse response )
+             throws ServletException, IOException
+    {
+        HttpSession session = request.getSession();
+        String product = (String) session.getAttribute("produit");
+        String company = (String) session.getAttribute("fournisseur");
+        int quantite = (int) session.getAttribute("quantite");
+        
+    }
+    
+    private void editProduct(HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        
+    }
+    
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
