@@ -8,12 +8,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <link rel="stylesheet" type="text/css" href="Css/LoginPage.css">
+        <link rel="stylesheet" type="text/css" href="Css/bootstrap.css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login</title>
+        <title>Connexion</title>
     </head>
     <body>
 
@@ -24,13 +24,13 @@
                     <h3>Administrateur</h3>
                     
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Votre nom d'utilisateur *" value="" />
+                            <input type="text" class="form-control" placeholder="Nom d'utilisateur *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Votre mot de passe *" value="" />
+                            <input type="password" class="form-control" placeholder="Mot de passe *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btnSubmit" value="Connexion" />
+                            <input type="submit" class="btnSubmitAdmin" value="Connexion" />
                         </div>
                         <div class="form-group">
                             <a href="#" class="btnForgetPwd">Mot de passe oublié ?</a>
@@ -38,18 +38,15 @@
                     
                 </div>
                 <div class="col-md-6 login-form-2">
-                    <div class="login-logo">
-                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
-                    </div>
                     <h3>Client</h3>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                            <input type="text" class="form-control" placeholder="Nom d'utilisateur *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                            <input type="password" class="form-control" placeholder="Mot de passe*" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btnSubmit" value="Connexion" />
+                            <input type="submit" class="btnSubmitClient" value="Connexion" />
                         </div>
                         <div class="form-group">
 
