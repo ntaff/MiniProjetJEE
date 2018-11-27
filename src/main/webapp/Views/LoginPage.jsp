@@ -24,13 +24,13 @@
                     <h3>Administrateur</h3>
                     
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Nom d'utilisateur *" value="" />
+                            <input type="text" class="form-control" name="login" placeholder="Nom d'utilisateur *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Mot de passe *" value="" />
+                            <input type="password" class="form-control" name="mdp" placeholder="Mot de passe *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btnSubmitAdmin" value="Connexion" />
+                            <input type="submit" name="actionAdmin" class="btnSubmitAdmin" value="Connexion" />
                         </div>
                         <div class="form-group">
                             <a href="#" class="btnForgetPwd">Mot de passe oublié ?</a>
@@ -40,16 +40,15 @@
                 <div class="col-md-6 login-form-2">
                     <h3>Client</h3>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Nom d'utilisateur *" value="" />
+                            <input type="text" class="form-control" name="login" placeholder="E-mail *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Mot de passe*" value="" />
+                            <input type="password" class="form-control" name="mdp" placeholder="Mot de passe*" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btnSubmitClient" value="Connexion" />
+                            <input type="submit" name="actionClient" class="btnSubmitClient" value="Connexion" />
                         </div>
                         <div class="form-group">
-
                             <a href="#" class="btnForgetPwd" value="Login">Mot de passe oublié ?</a>
                         </div>
                     </form>
