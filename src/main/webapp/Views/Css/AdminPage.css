@@ -1,0 +1,31 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28 nov. 2018, 13:48:47
+    Author     : Taffoureau
+*/
+
+hr {
+	height: 10px;
+	border: 0;
+	box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
+.btn-primary{
+    background-color:#f05837;
+    border-color:#285e8e
+}
+.btn-warning{
+    background-color:#f05837;
+    border-color:#285e8e
+}
+.btn-default{
+    background-color:#282726;
+    border-color:#285e8e
+}
+.btn-danger{
+    background-color:#282726;
+    border-color:#285e8e
+}
