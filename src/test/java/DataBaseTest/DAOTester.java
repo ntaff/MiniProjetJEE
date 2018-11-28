@@ -26,6 +26,7 @@ public class DAOTester
         myDAO=new DAO(myDataSource);
     }
     
+    // <editor-fold defaultstate="collapsed" desc="Shared Test. Click on the + sign on the left to edit the code.">
     @Test
     public void testLogin() throws DAOException
     {
@@ -60,4 +61,40 @@ public class DAOTester
         int PID = 980601;
         assertEquals(myDAO.shipPrice(PID, quantity),2000.95*quantity,2000.95*quantity);
     }
+    
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Client Test. Click on the + sign on the left to edit the code.">
+    
+    @Test public void testClientOrders() throws DAOException
+    {
+        String clientLogin = "www.smallbill.example.com";
+        String clientMDP = "3";
+        String product="Sound Card";
+        String company="Western Fast";
+        int clientID = clientMDP.indexOf(0);
+        int quantity = 2;
+        int befor = myDAO.getAllOrderNumbers().size();
+        
+        
+        assertEquals(myDAO.loginCheck(clientLogin, clientMDP),true);
+        int orderNum = myDAO.addOrder(clientID, product, quantity, company);
+        //int after=myDAO.getAllOrderNumbers().size();
+        //assertEquals(after,befor+1);
+        //myDAO.editOrder(orderNum, "Learn Java in 1/2 hour", 1);
+        //myDAO.deleteOrder(orderNum);
+        //assertEquals(myDAO.getAllOrderNumbers().size(),befor);
+    }
+    
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Other Test. Click on the + sign on the left to edit the code.">
+    
+    @Test
+    public void testDate()
+    {
+        System.out.println(myDAO.showDate());
+    }
+    
+    // </editor-fold>
 }

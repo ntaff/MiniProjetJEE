@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,17 +20,20 @@ import javax.sql.DataSource;
  */
 public class DAO 
 {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date;
     private final String admin="admin";
     private final DataSource myDataSource;
     
     public DAO(DataSource dataSource)
     {
         this.myDataSource = dataSource;
+        this.date=new Date();
     }
     
     // <editor-fold defaultstate="collapsed" desc="Shared DAO methods. Click on the + sign on the left to edit the code.">
     
-    public boolean loginCheck(String Mail, String ID) throws DAOException   //Check if admin or Client.
+    public boolean loginCheck(String Mail, String ID) throws DAOException   //Check if admin or Client. Tested
     {        
         if(Mail==admin && ID==admin)
         {
@@ -53,7 +58,7 @@ public class DAO
         return false;
     }
     
-    public List<Integer> getAllOrderNumbers()   //For DAO.
+    public List<Integer> getAllOrderNumbers()   //For DAO. Tested
     {
         List<Integer> NumOrders = new ArrayList();
         String sql = "Select ORDER_NUM FROM PURCHASE_ORDER";
@@ -77,7 +82,7 @@ public class DAO
         return NumOrders;
     }
     
-    public int OrdDescToNum(String desc) throws DAOException   //For DAO.
+    public int OrdDescToNum(String desc) throws DAOException   //For DAO. Tested
     {
         int Num=0;
         String sql ="SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION=?";
@@ -99,7 +104,7 @@ public class DAO
         return Num;
     }
 
-    public float shipPrice(int PID, int quantity) throws DAOException
+    public float shipPrice(int PID, int quantity) throws DAOException   //For DAO. Tested
     {
         float price=0;
         String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID=?";
@@ -149,8 +154,10 @@ public class DAO
     
     // <editor-fold defaultstate="collapsed" desc="Client DAO methods. Click on the + sign on the left to edit the code.">
     
-    public void addOrder(int customerID, String product, int quantity, String fCompany) throws DAOException
+    public int addOrder(int customerID, String product, int quantity, String fCompany) throws DAOException
     {
+        String currentDate=dateFormat.format(date);
+        
         List<Integer> ON = this.getAllOrderNumbers();
         int NewON = Collections.max(ON)+1;
         int prodID = this.OrdDescToNum(product);
@@ -166,8 +173,8 @@ public class DAO
             stmt.setObject(3, prodID);  
             stmt.setObject(4, quantity);
             stmt.setObject(5, price);
-            stmt.setObject(6, "");  //Get Date
-            stmt.setObject(7, "");  //Get Date
+            stmt.setObject(6, currentDate);
+            stmt.setObject(7, currentDate);
             stmt.setObject(8, fCompany);
             
             stmt.executeUpdate();
@@ -175,6 +182,28 @@ public class DAO
         } catch (SQLException ex) {
             //throws exception
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return NewON;
+    }
+    
+    public void editOrder(int orderNumber, String product, int quantity) throws DAOException
+    {
+        int prodID = this.OrdDescToNum(product);
+        String currentDate=dateFormat.format(date);
+        String sql="UPDATE PURCHASE_ORDER SET PRODUCT_ID=?, QUANTITY=?, SALES_DATE=?, SHIPPING_DATE=? WHERE ORDER_NUM=?";
+        
+        try(Connection connection =myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1,prodID);
+            stmt.setInt(2, quantity);
+            stmt.setString(3, currentDate);
+            stmt.setString(4, currentDate);
+            stmt.setInt(5, orderNumber);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+            //throw exception
         }
     }
     
@@ -197,5 +226,14 @@ public class DAO
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Admin DAO methods. Click on the + sign on the left to edit the code.">
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Other Test methods. Click on the + sign on the left to edit the code.">
+    
+    public String showDate()
+    {
+        return dateFormat.format(date);
+    }
+    
     // </editor-fold>
 }
