@@ -26,4 +26,3 @@ app: miniprojetjee
  ####### sonarqube:
  ######   token:
   #####    secure: e22218a1c091001d3a67890495f0a1e613468225 # encrypted value of your token
-
