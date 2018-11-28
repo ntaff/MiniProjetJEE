@@ -21,8 +21,5 @@ public class DAO_Client
         
     }
     
-    public void deleteOrder(int orderNumber)
-    {
-        
-    }
+    
 }
