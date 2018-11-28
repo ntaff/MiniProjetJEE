@@ -10,7 +10,15 @@ language: java
 deploy:
 provider: heroku
 api_key:
-        secure: 91ee767feb734b6982d6afd1cf4456be
+        secure: "L2POJEzJNzexWFZW703M2VzVo21EmE13g+ezZ/tDKlS
+3Ce+sxZO5h3qHD7WY+oICvZMqYz4YsLjA+TTphQYNwZvWkXn4D+D
+YBXF50CLno64u0HemNEkchzKdvYk3jANtG4BApIqEAeBxuvMI1Jd
+Eu2eWkztr/mvYR1zoX8Lm+dcg7usPOVOPolFr91edgE5xTJCFi1p
+iB/5DfRi6uEfeUSX8ES86EPr/O6hxPslMzLL7xIkjvdznS1zd+ZI
+2e2+4idbrd6/4iKwRJ5Qtlh0JL3G8KiykD+usJJV12dECgxNvSze
+VD7CumW5MO+ORTuKyhbwlLCPiTxi+4kN333U+7T7M1hOmcFBgDGv
+pgOJbMVb6NBU42YFea8dkwHcTXSzAeDWvZYKM1ZOL4gcpWOYrKs3
+sSCSILYoxCW3yTFRVGCENkl8JEqoPfyh9JLYcAqk0pMl1RO4R8Co="
 app: miniprojetjee
   
 # Run SonarQube on code
