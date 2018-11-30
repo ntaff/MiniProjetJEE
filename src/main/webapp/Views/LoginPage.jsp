@@ -15,6 +15,10 @@
         <title>Connexion</title>
     </head>
     <body>
+      <div class="hub">
+            <span>MiniProjet</span>
+            <span>JEE</span>
+      </div>
         <div class="container login-container">
             <div class="row">
                 <div class="col-md-6 login-form-1">

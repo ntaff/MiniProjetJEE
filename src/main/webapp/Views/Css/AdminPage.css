@@ -14,18 +14,35 @@ hr {
 	box-shadow: 0 10px 10px -10px #8c8b8b inset;
 }
 .btn-primary{
-    background-color:#f05837;
+    background-color:#FF9900;
     border-color:#285e8e
 }
 .btn-warning{
-    background-color:#f05837;
+    background-color:#FF9900;
     border-color:#285e8e
 }
 .btn-default{
-    background-color:#282726;
+    background-color:#000000;
     border-color:#285e8e
 }
 .btn-danger{
-    background-color:#282726;
+    background-color:#000000;
     border-color:#285e8e
+}
+
+.hub {
+  margin-top: 20px;
+  display: block;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 5vw;
+  text-align: center
+}
+
+.hub span:nth-child(2) {
+  background: #FF9900;
+  color: #000000;
+  border-radius: 1vw;
+  padding: 0 1vw 1vw 1vw;
+  display: inline-block;
 }

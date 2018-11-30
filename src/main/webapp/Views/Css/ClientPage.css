@@ -9,18 +9,18 @@ and open the template in the editor.
 */
 
 .btn-primary{
-    background-color:#f05837;
+    background-color:#FF9900;
     border-color:#285e8e
 }
 .btn-warning{
-    background-color:#f05837;
+    background-color:#FF9900;
     border-color:#285e8e
 }
 .btn-default{
-    background-color:#282726;
+    background-color:#000000;
     border-color:#285e8e
 }
 .btn-danger{
-    background-color:#282726;
+    background-color:#000000;
     border-color:#285e8e
 }
