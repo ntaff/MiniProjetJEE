@@ -1,10 +1,12 @@
 package DataBase;
 
+import DataStructure.ChiffreAff;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
@@ -328,6 +330,37 @@ public class DAO
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Admin DAO methods. Click on the + sign on the left to edit the code.">
+    
+    public ChiffreAff getChiffresAffaires(String produit, String dateDeb, String dateFin) throws DAOException, ParseException   //toTest
+    {
+        ChiffreAff cA = new ChiffreAff(produit,0.f);
+        int PID = OrdDescToNum(produit);
+        Date deb = dateFormat.parse(dateDeb);
+        Date fin = dateFormat.parse(dateFin);
+        
+        String sql = "SELECT SHIPPING_COST FROM PURCHASE_ORDER WHERE PRODUCT_ID=? AND SALES_DATE>=? AND SHIPPING_DATE<=?;";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1, PID);
+            stmt.setDate(2, (java.sql.Date) deb);
+            stmt.setDate(3, (java.sql.Date) fin);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next())
+            {
+                float num = rs.getFloat("SHIPPING_COST");
+                cA.addToSales(num); 
+            }
+            
+        } catch (SQLException ex){
+            //Throw exception
+        }
+        return cA;
+    }
+    
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Other Test methods. Click on the + sign on the left to edit the code.">
