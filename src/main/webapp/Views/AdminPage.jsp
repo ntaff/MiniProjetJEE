@@ -21,7 +21,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Articles</h4>
+                    <h4>Articles | <button class="btn btn-primary btn-xs" data-title="Ajout" data-toggle="modal" data-target="#ajoutBon" ><span class="glyphicon glyphicon-plus"></span></button></h4>
                     <div class="table-responsive">
                         <table id="bons" class="table table-bordred table-striped">
                             <thead>
@@ -158,6 +158,35 @@
                         <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Oui</button>
                         <button type="button" class="btn btn-warning" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Non</button>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="ajoutBon" tabindex="-1" role="dialog" aria-labelledby="ajoutBon" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <h4 class="modal-title custom_align" id="Heading">Ajouter un produit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input class="form-control " type="text" placeholder="Nom du produit">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control " type="text" placeholder="Quantité">
+                        </div>
+                        <div class="control-group">
+                          <label for="fournisseur">Fournisseur</label>
+                          <select id="selectfournisseur"class="form-control" name="fournisseur">
+                            <option value="0" >Colissimo</option>
+                            <option value="1" >DHL</option>
+                          </select>
+                        </div>
+                    </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Ajouter</button>
+                        </div>
                 </div>
             </div>
         </div>
