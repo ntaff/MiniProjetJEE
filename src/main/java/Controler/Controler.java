@@ -9,11 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import DataBase.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.DataSource;
 
 
 @WebServlet(name = "Controler", urlPatterns = {"/Controler"})
 public class Controler extends HttpServlet {
-
+    
+    DataSource myDataSource;
+    DAO myDAO;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -24,8 +32,10 @@ public class Controler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException 
+            throws ServletException, IOException, DAOException, SQLException 
     {
+        this.myDataSource = DataSourceFactory.getDataSource();
+        this.myDAO = new DAO(this.myDataSource);
         response.setContentType("text/html;charset=UTF-8");
         // Partie client
         if (actionIsClient(request, "Connexion")) 
@@ -95,17 +105,20 @@ public class Controler extends HttpServlet {
      * @param response 
      */
     private void newConnect(HttpServletRequest request, HttpServletResponse response, boolean isAd ) 
-            throws ServletException, IOException
+            throws ServletException, IOException, DAOException
     {
         HttpSession session = request.getSession();
         String login = (String) session.getAttribute("login");
         String pwd = (String) session.getAttribute("mdp");
         // Ici ajout de la condition de validité de login et pwd
-        if (isAd)
+        if(this.myDAO.loginCheck(login, pwd))
         {
-            showView("AdminPage.jsp", request, response);
-        } else {
-            showView("ClientPagge.jsp", request, response);
+            if (isAd)
+            {
+                showView("AdminPage.jsp", request, response);
+            } else {
+                showView("ClientPagge.jsp", request, response);
+            }
         }
         
     }
@@ -190,7 +203,13 @@ public class Controler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DAOException ex) {
+            Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -204,7 +223,13 @@ public class Controler extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DAOException ex) {
+            Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Controler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
