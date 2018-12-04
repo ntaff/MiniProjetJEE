@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -221,6 +222,29 @@ public class DAO
         return dC;
     }
     
+    public List<String> getStates() //toTest
+    {
+        List<String> states = new ArrayList();
+        
+        String sql = "SELECT DISTINCT STATE FROM CUSTOMER";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery())
+        {
+            while(rs.next())
+            {
+                states.add(rs.getString("STATE"));
+            }
+            
+        } catch (SQLException ex)
+        {
+            //Throw exception.
+        }
+        
+        return states;
+    }
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Client DAO methods. Click on the + sign on the left to edit the code.">
@@ -331,7 +355,7 @@ public class DAO
     
     // <editor-fold defaultstate="collapsed" desc="Admin DAO methods. Click on the + sign on the left to edit the code.">
     
-    public ChiffreAff getChiffresAffaires(String produit, String dateDeb, String dateFin) throws DAOException, ParseException   //toTest
+    public ChiffreAff getChiffresAffairesProduit(String produit, String dateDeb, String dateFin) throws DAOException, ParseException   //toTest
     {
         ChiffreAff cA = new ChiffreAff(produit,0.f);
         int PID = OrdDescToNum(produit);
@@ -358,6 +382,62 @@ public class DAO
         } catch (SQLException ex){
             //Throw exception
         }
+        return cA;
+    }
+    
+    public ChiffreAff getChiffresAffairesState(String state, String dateDeb, String dateFin) throws ParseException  //toTest
+    {
+        ChiffreAff cA = new ChiffreAff(state,0.f);
+        Date deb = dateFormat.parse(dateDeb);
+        Date fin = dateFormat.parse(dateFin);
+        
+        String sql= "SELECT PURCHASE_ORDER.SHIPPING_COST "
+                    + "FROM CUSTOMER INNER JOIN PURCHASE_ORDER ON CUSTOMER.CUSTOMER_ID=PURCHASE_ORDER.CUSTOMER_ID"
+                    + "WHERE CUSTOMER.STATE=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, state);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                cA.addToSales(rs.getFloat("SHIPPING_COST"));
+            }
+            
+        } catch (SQLException ex)
+        {
+            //Throw Exception.
+        }
+        
+        return cA;
+    }
+    
+    public ChiffreAff getChiffresAffairesClient(String clientName, String dateDeb, String dateFin) throws ParseException  //toTest
+    {
+        ChiffreAff cA = new ChiffreAff(clientName,0.f);
+        Date deb = dateFormat.parse(dateDeb);
+        Date fin = dateFormat.parse(dateFin);
+        
+        String sql = "SELECT PURCHASE_ORDER.SHIPPING_COST "
+                    + "FROM CUSTOMER INNER JOIN PURCHASE_ORDER ON CUSTOMER.CUSTOMER_ID=PURCHASE_ORDER.CUSTOMER_ID"
+                    + "WHERE CUSTOMER.NAME=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, clientName);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                cA.addToSales(rs.getFloat("SHIPPING_COST"));
+            }
+            
+        } catch (SQLException ex)
+        {
+            //Throw Exception.
+        }
+        
         return cA;
     }
     

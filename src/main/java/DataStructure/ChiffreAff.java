@@ -6,18 +6,18 @@ package DataStructure;
  */
 public class ChiffreAff 
 {
-    String produit;
+    String description;
     float vente;
     
-    public ChiffreAff(String prod, float sales)
+    public ChiffreAff(String desc, float sales)
     {
-        this.produit=prod;
+        this.description=desc;
         this.vente=sales;
     }
     
     public String getProd()
     {
-        return this.produit;
+        return this.description;
     }
     
     public float getSales()
