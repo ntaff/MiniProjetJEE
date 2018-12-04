@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
  <head>
+     <title>Panel administrateur</title>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="Js/bar_chart.js"> </script>
   <script type="text/javascript" src="Js/geo_chart.js"> </script>
@@ -80,7 +81,7 @@
                     <div id="chart" style="width: 900px; height: 500px;"></div>
                     <hr>
                     <p>Chiffre d'affaire par zone géographique</p>
-                    <div id="geo_chart" style="width: 900px; height: 500px;"></div>
+                    <div id="geochart" style="width: 900px; height: 500px;"></div>
                     <hr>
                     <div id="client_chart" style="width: 900px; height: 500px;"></div>
                     <hr>
