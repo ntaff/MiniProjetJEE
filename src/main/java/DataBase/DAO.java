@@ -1,10 +1,12 @@
 package DataBase;
 
+import DataStructure.ChiffreAff;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
@@ -126,35 +128,135 @@ public class DAO
         return price*quantity;
     }
     
-    public List<Integer> getOrderNumbers(int customerID) //toImplement
+    public List<Integer> getOrderNumbers(int customerID) //toTest
     {
         List<Integer> Orders = new ArrayList();
         
+        String sql = "SELECT ORDER_NUM WHERE CUSTOMERID=?";
         
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setObject(1, customerID);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next())
+            {
+                Orders.add(rs.getInt("ORDER_NUM"));
+            }
+            
+        } catch (SQLException ex)
+        {
+            //throw exception
+        }
         return Orders;
     }
     
-    public List<String> getProductIDs() //toImplement
+    public List<String> getProduct() //toTest
     {
-        List<String> PID = new ArrayList();
+        List<String> P = new ArrayList();
         
+        String sql = "SELECT DESCRIPTION FROM PRODUCT";
         
-        return PID;
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next())
+            {
+                P.add(rs.getString("DESCRIPTION"));
+            }
+            
+        } catch(SQLException ex) {
+            //throw Exception
+        }
+        return P;
     }
     
-    public List<String> getFCompany() //toImplement
+    public List<String> getFCompany() //toTest
     {
         List<String> FC = new ArrayList();
         
+        String sql = "SELECT DISTINCT FREIGHT_COMPANY FROM PURCHASE_ORDER";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next())
+            {
+                FC.add(rs.getString("FREIGHT_COMPANY"));
+            }
+            
+        } catch(SQLException ex){
+            //throw exception
+        }
         
         return FC;
+    }
+    
+    public List<Character> getDiscountCode()    //toTest
+    {
+        List<Character> dC = new ArrayList();
+        
+        String sql = "SELECT DISCOUNT_CODE FROM DISCOUNT_CODE";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next())
+            {
+                dC.add((Character) rs.getObject("DISCOUNT_CODE"));
+            }
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+        
+        return dC;
     }
     
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Client DAO methods. Click on the + sign on the left to edit the code.">
     
-    public int addOrder(int customerID, String product, int quantity, String fCompany) throws DAOException
+    public void editCustomer(   int customerID, char discountCode, int ZIP, String Nom, String addr1, String addr2, String City, 
+                                String state, String phone, String Fax, String email, int creditLimit)  //To test
+    {
+        String sql =    "UPDATE CUSTOMER "
+                        + "SET discount_code=?, zip=?, name=?, adressline1=?, adresseline2=?, city=?, state=?, "
+                        + "phone=?, fax=?, email=?, credit_limit=? "
+                        + "where order_num=?";
+        
+        try(Connection connection =myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setObject(1, discountCode);
+            stmt.setObject(2, ZIP);
+            stmt.setObject(3, Nom);
+            stmt.setObject(4, addr1);
+            stmt.setObject(5, addr2);
+            stmt.setObject(6, City);
+            stmt.setObject(7, state);
+            stmt.setObject(8, phone);
+            stmt.setObject(9, Fax);
+            stmt.setObject(10, email);
+            stmt.setObject(11, creditLimit);
+            stmt.setObject(12, customerID);
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            //throw connection exception
+        }
+    }
+    
+    public int addOrder(int customerID, String product, int quantity, String fCompany) throws DAOException  //To test
     {
         String currentDate=dateFormat.format(date);
         
@@ -186,7 +288,7 @@ public class DAO
         return NewON;
     }
     
-    public void editOrder(int orderNumber, String product, int quantity) throws DAOException
+    public void editOrder(int orderNumber, String product, int quantity) throws DAOException    //To test
     {
         int prodID = this.OrdDescToNum(product);
         String currentDate=dateFormat.format(date);
@@ -201,13 +303,15 @@ public class DAO
             stmt.setString(4, currentDate);
             stmt.setInt(5, orderNumber);
             
+            stmt.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
             //throw exception
         }
     }
     
-    public void deleteOrder(int orderNumber)
+    public void deleteOrder(int orderNumber)    //To test
     {
         String sql="DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM=?";
         
@@ -226,11 +330,42 @@ public class DAO
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Admin DAO methods. Click on the + sign on the left to edit the code.">
+    
+    public ChiffreAff getChiffresAffaires(String produit, String dateDeb, String dateFin) throws DAOException, ParseException   //toTest
+    {
+        ChiffreAff cA = new ChiffreAff(produit,0.f);
+        int PID = OrdDescToNum(produit);
+        Date deb = dateFormat.parse(dateDeb);
+        Date fin = dateFormat.parse(dateFin);
+        
+        String sql = "SELECT SHIPPING_COST FROM PURCHASE_ORDER WHERE PRODUCT_ID=? AND SALES_DATE>=? AND SHIPPING_DATE<=?;";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1, PID);
+            stmt.setDate(2, (java.sql.Date) deb);
+            stmt.setDate(3, (java.sql.Date) fin);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next())
+            {
+                float num = rs.getFloat("SHIPPING_COST");
+                cA.addToSales(num); 
+            }
+            
+        } catch (SQLException ex){
+            //Throw exception
+        }
+        return cA;
+    }
+    
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Other Test methods. Click on the + sign on the left to edit the code.">
     
-    public String showDate()
+    public String showDate()    //Gets current date.
     {
         return dateFormat.format(date);
     }
