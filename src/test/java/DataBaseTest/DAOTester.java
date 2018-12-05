@@ -41,7 +41,7 @@ public class DAOTester
     }
     
     @Test
-    public void testAllOrderNumber()
+    public void testAllOrderNumber() throws DAOException
     {
         List<Integer> ON = myDAO.getAllOrderNumbers();
         assertEquals(ON.size(),15);
@@ -72,7 +72,7 @@ public class DAOTester
     }
     
     @Test
-    public void testProducts()
+    public void testProducts() throws DAOException
     {
         int size = 30;
         List test = myDAO.getProduct();
@@ -81,6 +81,27 @@ public class DAOTester
             System.out.println(test.get(i));
         }
         assertEquals(test.size(), size);
+    }
+    
+    @Test
+    public void testCompany() throws DAOException 
+    {
+        List fcomp = myDAO.getFCompany();
+        assertEquals(fcomp.size(),7);
+    }
+    
+    @Test
+    public void testDiscountCodes() throws DAOException 
+    {
+        List dC = myDAO.getDiscountCode();
+        assertEquals(dC.size(),4);
+    }
+    
+    @Test
+    public void testStates() throws DAOException
+    {
+        List states = myDAO.getStates();
+        assertEquals(states.size(),6);
     }
     
     // </editor-fold>
