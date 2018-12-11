@@ -22,7 +22,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Articles | <button class="btn btn-primary btn-xs" data-title="Ajout" data-toggle="modal" data-target="#ajoutBon" ><span class="glyphicon glyphicon-plus"></span></button></h4>
+                    <h4>Articles | <button class="btn btn-primary btn-xs" data-title="Ajout" data-toggle="modal" data-target="#ajoutBon" ><span class="glyphicon glyphicon-plus"></span></button> | <button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifier" ><span class="glyphicon glyphicon-pencil"></span></button> | <button class="btn btn-danger btn-xs" data-title="Supprimer" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-trash"></span></button></h4>
                     <div class="table-responsive">
                         <table id="bons" class="table table-bordred table-striped">
                             <thead>
@@ -30,8 +30,6 @@
                                 <th>Quantité</th>
                                 <th>Prix unitaire</th>
                                 <th>Fournisseur</th>
-                                <th>Modifier</th>
-                                <th>Supprimer</th>
                             </thead>
                             <tbody>
                             <c:forEach var="prod" items="${produitsadmin}">
@@ -40,8 +38,6 @@
                                     <td>${prod.quantite}</td>
                                     <td>${prod.prix}</td>
                                     <td>${prod.fournisseur}</td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifier" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Supprimer" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -72,8 +68,9 @@
                         <div class="form-group">
                             <label for="nomproduit">Nom du produit</label>
                             <select id="nomproduit"class="form-control" name="nomproduit">
-                                <option value="0" >Câble</option>
-                                <option value="1" >Yahourt</option>
+                            <c:forEach var="prod" items="${produit}">
+                            <option value="0" >${prod.id}</option>
+                            </c:forEach>
                             </select>
                         </div>
                         <div class="form-group">
@@ -101,9 +98,17 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <h4 class="modal-title custom_align" id="Heading">Supprimer l'article</h4>
+                        <h4 class="modal-title custom_align" id="Heading">Supprimer un article</h4>
                     </div>
                     <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nomproduit">Nom du produit</label>
+                            <select id="nomproduit"class="form-control" name="nomproduit">
+                            <c:forEach var="prod" items="${produit}">
+                            <option value="0" >${prod.id}</option>
+                            </c:forEach>
+                            </select>
+                        </div>
                         <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Etes vous sûr de vouloir supprimer cet article, définitivement, pour toujours et à jamais ?</div>
                     </div>
                     <div class="modal-footer ">
