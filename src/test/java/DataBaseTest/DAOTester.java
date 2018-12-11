@@ -1,8 +1,6 @@
 package DataBaseTest;
 
-import DataBase.DAO;
-import DataBase.DAOException;
-import DataBase.DataSourceFactoryUnit;
+import DataBase.*;
 import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;

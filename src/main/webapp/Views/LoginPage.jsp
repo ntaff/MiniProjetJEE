@@ -24,14 +24,15 @@
                 <div class="col-md-6 login-form-1">
                     <h3>Administrateur</h3>  
                         <div class="form-group">
-                            <input type="text" class="form-control" name="login" placeholder="Nom d'utilisateur *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="mdp" placeholder="Mot de passe *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <form method="GET">
-                                <input type="submit" name="action" class="btnSubmitAdmin" value="Connexion"  method="POST" />
+                            <form method="POST">
+                                    <input type="text" class="form-control" name="login" placeholder="Nom d'utilisateur *" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="mdp" placeholder="Mot de passe *" value="" />
+                                </div>
+                                <div class="form-group">
+
+                                        <input type="submit" name="action" class="btnSubmitAdmin" value="Connexion"  method="POST" />
                             </form>
                         </div>  
                     <p>${erreur}</p>
@@ -39,16 +40,16 @@
                 <div class="col-md-6 login-form-2">
                     <h3>Client</h3>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="login" placeholder="E-mail *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" name="mdp" placeholder="Mot de passe*" value="" />
-                        </div>
-                        <div class="form-group">
-                            <form method="GET">
-                                 <input type="submit" name="action" class="btnSubmitClient" value="Connexion"  method="POST" />
+                            <form method="POST">
+                                    <input type="text" class="form-control" name="login" placeholder="E-mail *" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="mdp" placeholder="Mot de passe*" value="" />
+                                </div>
+                                <div class="form-group">
+
+                                         <input type="submit" name="action" class="btnSubmitClient" value="Connexion"  method="POST" />
                             </form>
-                            
                         </div>
                      <p>${erreur}</p>
                     </form>
