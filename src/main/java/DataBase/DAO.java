@@ -36,31 +36,6 @@ public class DAO
     
     // <editor-fold defaultstate="collapsed" desc="Shared DAO methods. Click on the + sign on the left to edit the code.">
     
-    public boolean loginCheck(String Mail, String ID) throws DAOException   //Check if admin or Client.
-    {        
-        if(Mail==admin && ID==admin)
-        {
-            return true;
-        }
-        String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID=? and EMAIL=?";
-        
-        try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            stmt.setString(1, ID);
-            stmt.setString(2, Mail);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-            {
-                return true;
-            }
-            
-        } catch (SQLException ex) {
-            throw new DAOException("DataBase Connection Failed.");
-        }
-        return false;
-    }
-    
     public List<Integer> getAllOrderNumbers() throws DAOException   //For DAO. Gets all orders.
     {
         List<Integer> NumOrders = new ArrayList();
@@ -84,48 +59,71 @@ public class DAO
         return NumOrders;
     }
     
-    public int OrdDescToNum(String desc) throws DAOException   //For DAO. Uses the product description then returns it's ID.
+    public List<Character> getDiscountCode() throws DAOException    //Returns all the discount codes.
     {
-        int Num=0;
-        String sql ="SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION=?";
+        List<Character> dC = new ArrayList();
+        
+        String sql = "SELECT DISCOUNT_CODE FROM DISCOUNT_CODE";
         
         try(Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
-            stmt.setString(1,desc);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next())
+            
+            while(rs.next())
             {
-                Num=rs.getInt("PRODUCT_ID");
+                dC.add(rs.getString("DISCOUNT_CODE").charAt(0));
             }
             
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("DataBase Connection Failed.");
         }
         
-        return Num;
+        return dC;
     }
-
-    public float shipPrice(int PID, int quantity) throws DAOException   //For DAO. Computes the total price for the order. 
+    
+    public List<String> getFCompany() throws DAOException //Returns all the Freight Companies.
     {
-        float price=0;
-        String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID=?";
+        List<String> FC = new ArrayList();
+        
+        String sql = "SELECT DISTINCT FREIGHT_COMPANY FROM PURCHASE_ORDER";
         
         try(Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
-            stmt.setInt(1,PID);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next())
+            
+            while(rs.next())
             {
-                price=rs.getFloat("PURCHASE_COST");
+                FC.add(rs.getString("FREIGHT_COMPANY"));
             }
             
-        }catch (SQLException ex) {
+        } catch(SQLException ex){
             throw new DAOException("DataBase Connection Failed.");
         }
         
-        return price*quantity;
+        return FC;
+    }
+    
+    public List<String> getManufacturerID() //toTest
+    {
+        List<String> mID = new ArrayList();
+        
+        String sql = "SELECT NAME FROM MANUFACTURER";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery())
+        {
+            while(rs.next())
+            {
+                mID.add(rs.getString("NAME"));
+            }
+            
+        } catch (SQLException ex) {
+            //Throw Excpetion
+        }
+        return mID;
     }
     
     public List<Integer> getOrderNumbers(int customerID) throws DAOException //Returns a list of orders available for a customer. 
@@ -175,50 +173,26 @@ public class DAO
         return P;
     }
     
-    public List<String> getFCompany() throws DAOException //Returns all the Freight Companies.
+    public List<String> getProductCodes() //toTest
     {
-        List<String> FC = new ArrayList();
+        List<String> pC = new ArrayList();
         
-        String sql = "SELECT DISTINCT FREIGHT_COMPANY FROM PURCHASE_ORDER";
+        String sql = "SELECT PROD_CODE FROM PRODUCT_CODE";
         
         try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
+            PreparedStatement stmt = connection.prepareStatement(admin))
         {
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next())
             {
-                FC.add(rs.getString("FREIGHT_COMPANY"));
-            }
-            
-        } catch(SQLException ex){
-            throw new DAOException("DataBase Connection Failed.");
-        }
-        
-        return FC;
-    }
-    
-    public List<Character> getDiscountCode() throws DAOException    //Returns all the discount codes.
-    {
-        List<Character> dC = new ArrayList();
-        
-        String sql = "SELECT DISCOUNT_CODE FROM DISCOUNT_CODE";
-        
-        try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next())
-            {
-                dC.add(rs.getString("DISCOUNT_CODE").charAt(0));
+                pC.add(rs.getString("PROD_CODE"));
             }
             
         } catch (SQLException ex) {
-            throw new DAOException("DataBase Connection Failed.");
+            //Throw exception.
         }
-        
-        return dC;
+        return pC;
     }
     
     public List<String> getStates() throws DAOException //Returns all states currently populated by customers.
@@ -242,6 +216,98 @@ public class DAO
         }
         
         return states;
+    }
+    
+    public boolean loginCheck(String Mail, String ID) throws DAOException   //Check if admin or Client.
+    {        
+        if(Mail==admin && ID==admin)
+        {
+            return true;
+        }
+        String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID=? and EMAIL=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, ID);
+            stmt.setString(2, Mail);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+            {
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            throw new DAOException("DataBase Connection Failed.");
+        }
+        return false;
+    }
+    
+    public int ManToID(String Manufacturer) //toTest
+    {
+        String sql = "SELECT MANUFACTURER_ID FROM MANUFACTURER WHERE NAME=?";
+        int ID = 0;
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, Manufacturer);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next())
+            {
+                ID = rs.getInt("MANUFACTURER_ID");
+            }
+            
+        } catch (SQLException ex) {
+            //throw Exception
+        }
+        return ID;
+    }
+    
+    public int OrdDescToNum(String desc) throws DAOException   //For DAO. Uses the product description then returns it's ID.
+    {
+        int Num=0;
+        String sql ="SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1,desc);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next())
+            {
+                Num=rs.getInt("PRODUCT_ID");
+            }
+            
+        }catch (SQLException ex) {
+            throw new DAOException("DataBase Connection Failed.");
+        }
+        
+        return Num;
+    }
+
+    public float shipPrice(int PID, int quantity) throws DAOException   //For DAO. Computes the total price for the order. 
+    {
+        float price=0;
+        String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1,PID);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next())
+            {
+                price=rs.getFloat("PURCHASE_COST");
+            }
+            
+        }catch (SQLException ex) {
+            throw new DAOException("DataBase Connection Failed.");
+        }
+        
+        return price*quantity;
     }
     
     // </editor-fold>
@@ -438,6 +504,30 @@ public class DAO
         }
         
         return cA;
+    }
+    
+    
+    //for admin nom prod/qté/prixunit/fourn 
+    public void editProduct(String Manufacturer, String ProductCode, float PurchaseCost, int Quantity, float markup, String Description)
+    {
+        String sql = "UPDATE PRODUCT "
+                    + "SET MANUFACTURER_ID=?, PRODUCT_CODE=?, PURCHASE_COST=?, QUANTITY_ON_HAND=?, MARKUP=?, AVAILABLE=?"
+                    + "WHERE DESCRIPTION=?";
+        
+        
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            //transform manufacturer to ID
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+        //get descriptionID
+        //calcul prodID
+        
+        //calcul available
     }
     
     // </editor-fold>
