@@ -34,6 +34,8 @@ public class DAO
         this.date=new Date();
     }
     
+    //getclient nom,addresse,tel,mail
+    
     // <editor-fold defaultstate="collapsed" desc="Shared DAO methods. Click on the + sign on the left to edit the code.">
     
     public List<Integer> getAllOrderNumbers() throws DAOException   //For DAO. Gets all orders.
@@ -266,6 +268,30 @@ public class DAO
         return ID;
     }
     
+    public int newProdID()
+    {
+        int ID=0;
+        List<Integer> listID = new ArrayList();
+        String sql = "SELECT PRODUCT_ID FROM PRODUCT";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery())
+        {
+            while(rs.next())
+            {
+                listID.add(rs.getInt("PRODUCT_ID"));
+            }
+            
+            ID=Collections.max(listID)+1;
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+        
+        return ID;
+    }
+    
     public int OrdDescToNum(String desc) throws DAOException   //For DAO. Uses the product description then returns it's ID.
     {
         int Num=0;
@@ -420,7 +446,51 @@ public class DAO
     
     // <editor-fold defaultstate="collapsed" desc="Admin DAO methods. Click on the + sign on the left to edit the code.">
     
-    //public void 
+    public void createProduct(String Manufacturer, String ProductCode, float PurchaseCost, int Quantity, float markup, String Description)
+    {
+        String sql ="INSERT INTO PRODUCT VALUES(?,?,?,?,?,?,?,?)";
+        int newID = this.newProdID();
+        int manID = this.ManToID(Manufacturer);
+        String available = "FALSE";
+        if(Quantity!=0)
+        {
+            available="TRUE";
+        }
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1, newID);
+            stmt.setInt(2, manID);
+            stmt.setString(3, ProductCode);
+            stmt.setFloat(4, PurchaseCost);
+            stmt.setInt(5, Quantity);
+            stmt.setFloat(6, markup);
+            stmt.setString(7, available);
+            stmt.setString(8, Description);
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+    }
+    
+    public void deleteProduct(String Description)   //toTest
+    {
+        String sql = "DELETE FROM PRODUCT WHERE DESCRIPTION=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, Description);
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+    }
     
     public void editProduct(String Manufacturer, String ProductCode, float PurchaseCost, int Quantity, float markup, String Description)    //toTest
     {
