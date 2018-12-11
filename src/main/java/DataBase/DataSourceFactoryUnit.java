@@ -5,13 +5,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
 
-public class DataSourceFactory {
+public class DataSourceFactoryUnit {
         // Pré-chargement du driver, ne devrait pas âtre nécessaire avec des versions plus récentes
         static {
             try {
                 Class.forName("org.apache.derby.jdbc.ClientDriver");
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(DataSourceFactory.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DataSourceFactoryUnit.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     
