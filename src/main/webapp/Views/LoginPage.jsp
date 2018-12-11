@@ -30,7 +30,9 @@
                             <input type="password" class="form-control" name="mdp" placeholder="Mot de passe *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="actionAdmin" class="btnSubmitAdmin" value="Connexion"  method="POST" />
+                            <form method="GET">
+                                <input type="submit" name="action" class="btnSubmitAdmin" value="Connexion"  method="POST" />
+                            </form>
                         </div>  
                     <p>${erreur}</p>
                 </div>
@@ -43,7 +45,10 @@
                             <input type="password" class="form-control" name="mdp" placeholder="Mot de passe*" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="actionClient" class="btnSubmitClient" value="Connexion"  method="POST" />
+                            <form method="GET">
+                                 <input type="submit" name="action" class="btnSubmitClient" value="Connexion"  method="POST" />
+                            </form>
+                            
                         </div>
                      <p>${erreur}</p>
                     </form>
