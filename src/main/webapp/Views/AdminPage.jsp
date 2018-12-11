@@ -87,7 +87,10 @@
                     <hr>
                 </div>
             </div>
-        </div>   
+        </div>
+        
+        
+        <!-- Modal de modification d'un article -->
         <div class="modal fade" id="modifier" tabindex="-1" role="dialog" aria-labelledby="modifier" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -97,7 +100,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="form-control " type="text" placeholder="Nom du produit">
+                            <label for="nomproduit">Nom du produit</label>
+                            <select id="nomproduit"class="form-control" name="nomproduit">
+                                <option value="0" >Câble</option>
+                                <option value="1" >Yahourt</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <input class="form-control " type="text" placeholder="Quantité">
@@ -116,35 +123,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="modifierInfos" tabindex="-1" role="dialog" aria-labelledby="ajout" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <h4 class="modal-title custom_align" id="Heading">Ajoutez un article</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input class="form-control " type="text" placeholder="Prénom">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control " type="text" placeholder="Nom">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Date de naissance">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Adresse">
-                        </div>
-                    </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Modifier</button>
-                        </div>
-                </div>
-            </div>
-        </div>
         
+        <!-- Modal de suppression d'un article -->
         <div class="modal fade" id="supprimer" tabindex="-1" role="dialog" aria-labelledby="supprimer" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -163,6 +143,7 @@
             </div>
         </div>
         
+        <!-- Modal d'ajout d'un produit -->
         <div class="modal fade" id="ajoutBon" tabindex="-1" role="dialog" aria-labelledby="ajoutBon" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -172,7 +153,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="form-control " type="text" placeholder="Nom du produit">
+                            <label for="nomproduit">Nom du produit</label>
+                            <select id="nomproduit"class="form-control" name="nomproduit">
+                                <option value="0" >Câble</option>
+                                <option value="1" >Yahourt</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <input class="form-control " type="text" placeholder="Quantité">
