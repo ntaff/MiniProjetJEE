@@ -30,10 +30,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Jean</td>
-                                    <td>Bon</td>
-                                    <td>17/02/1998</td>
-                                    <td>74 rue de Paris, 91120, Palaiseau</td>
+                                    <td>${prenom}</td>
+                                    <td>${prenom}</td>
+                                    <td>${datenaissance}</td>
+                                    <td>${adresse}</td>
                                     <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifierInfos" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
                                 </tr>
                             </tbody>
@@ -51,46 +51,16 @@
                                 <th>Supprimer</th>
                             </thead>
                             <tbody>
+                            <c:forEach var="prod" items="${produitsclient}">
                                 <tr>
-                                    <td>Exemple</td>
-                                    <td>5</td>
-                                    <td>10€</td>
-                                    <td>Colissimo</td>
+                                    <td>${prod.id}</td>
+                                    <td>${prod.quantite}</td>
+                                    <td>${prod.prix}</td>
+                                    <td>${prod.fournisseur}</td>
                                     <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifier" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
                                     <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Supprimer" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
                                 </tr>
-                                <tr>
-                                    <td>Exemple</td>
-                                    <td>47</td>
-                                    <td>17€</td>
-                                    <td>La Poste</td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifier" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Supprimer" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                                </tr>
-                                <tr>
-                                    <td>Exemple</td>
-                                    <td>2</td>
-                                    <td>58€</td>
-                                    <td>Colissimo</td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifier" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Supprimer" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                                </tr>
-                                <tr>
-                                    <td>Exemple</td>
-                                    <td>8</td>
-                                    <td>15€</td>
-                                    <td>Poney Express</td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifier" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Supprimer" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                                </tr>
-                                <tr>
-                                    <td>Exemple</td>
-                                    <td>1</td>
-                                    <td>85€</td>
-                                    <td>DHL</td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifier" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Supprimer"><button class="btn btn-danger btn-xs" data-title="Supprimer" data-toggle="modal" data-target="#supprimer" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -116,8 +86,9 @@
                         <div class="control-group">
                           <label for="fournisseur">Fournisseur</label>
                           <select id="selectfournisseur"class="form-control" name="fournisseur">
-                            <option value="0" >Colissimo</option>
-                            <option value="1" >DHL</option>
+                           <c:forEach var="four" items="${fournisseur}">
+                            <option value="0" >${four.noms}</option>
+                           </c:forEach>
                           </select>
                         </div>
                     </div>
@@ -188,8 +159,9 @@
                         <div class="form-group">
                             <label for="nomproduit">Nom du produit</label>
                             <select id="nomproduit"class="form-control" name="nomproduit">
-                                <option value="0" >Câble</option>
-                                <option value="1" >Yahourt</option>
+                           <c:forEach var="prod" items="${produit}">
+                            <option value="0" >${prod.id}</option>
+                           </c:forEach>
                             </select>
                         </div>
                         <div class="form-group">
@@ -198,8 +170,9 @@
                         <div class="control-group">
                           <label for="fournisseur">Fournisseur</label>
                           <select id="selectfournisseur"class="form-control" name="fournisseur">
-                            <option value="0" >Colissimo</option>
-                            <option value="1" >DHL</option>
+                           <c:forEach var="four" items="${fournisseur}">
+                            <option value="0" >${four.noms}</option>
+                           </c:forEach>
                           </select>
                         </div>
                     </div>
