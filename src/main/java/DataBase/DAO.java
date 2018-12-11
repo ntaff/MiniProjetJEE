@@ -36,7 +36,7 @@ public class DAO
     
     // <editor-fold defaultstate="collapsed" desc="Shared DAO methods. Click on the + sign on the left to edit the code.">
     
-    public boolean loginCheck(String Mail, String ID) throws DAOException   //Check if admin or Client. Tested
+    public boolean loginCheck(String Mail, String ID) throws DAOException   //Check if admin or Client.
     {        
         if(Mail==admin && ID==admin)
         {
@@ -61,7 +61,7 @@ public class DAO
         return false;
     }
     
-    public List<Integer> getAllOrderNumbers()   //For DAO. Tested
+    public List<Integer> getAllOrderNumbers() throws DAOException   //For DAO. Gets all orders.
     {
         List<Integer> NumOrders = new ArrayList();
         String sql = "Select ORDER_NUM FROM PURCHASE_ORDER";
@@ -78,14 +78,13 @@ public class DAO
             }
             
         } catch (SQLException ex) {
-            //throws exception
-            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DAOException("DataBase Connection Failed.");
         }
         
         return NumOrders;
     }
     
-    public int OrdDescToNum(String desc) throws DAOException   //For DAO. Tested
+    public int OrdDescToNum(String desc) throws DAOException   //For DAO. Uses the product description then returns it's ID.
     {
         int Num=0;
         String sql ="SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION=?";
@@ -107,7 +106,7 @@ public class DAO
         return Num;
     }
 
-    public float shipPrice(int PID, int quantity) throws DAOException   //For DAO. Tested
+    public float shipPrice(int PID, int quantity) throws DAOException   //For DAO. Computes the total price for the order. 
     {
         float price=0;
         String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID=?";
@@ -129,11 +128,11 @@ public class DAO
         return price*quantity;
     }
     
-    public List<Integer> getOrderNumbers(int customerID) //toTest
+    public List<Integer> getOrderNumbers(int customerID) throws DAOException //Returns a list of orders available for a customer. 
     {
         List<Integer> Orders = new ArrayList();
         
-        String sql = "SELECT ORDER_NUM WHERE CUSTOMERID=?";
+        String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER WHERE CUSTOMER_ID=?";
         
         try(Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
@@ -149,12 +148,12 @@ public class DAO
             
         } catch (SQLException ex)
         {
-            //throw exception
+            throw new DAOException("DataBase Connection Failed.");
         }
         return Orders;
     }
     
-    public List<String> getProduct() //toTest
+    public List<String> getProduct() throws DAOException //Returns a list of all the products descriptions.
     {
         List<String> P = new ArrayList();
         
@@ -171,12 +170,12 @@ public class DAO
             }
             
         } catch(SQLException ex) {
-            //throw Exception
+            throw new DAOException("DataBase Connection Failed.");
         }
         return P;
     }
     
-    public List<String> getFCompany() //toTest
+    public List<String> getFCompany() throws DAOException //Returns all the Freight Companies.
     {
         List<String> FC = new ArrayList();
         
@@ -193,13 +192,13 @@ public class DAO
             }
             
         } catch(SQLException ex){
-            //throw exception
+            throw new DAOException("DataBase Connection Failed.");
         }
         
         return FC;
     }
     
-    public List<Character> getDiscountCode()    //toTest
+    public List<Character> getDiscountCode() throws DAOException    //Returns all the discount codes.
     {
         List<Character> dC = new ArrayList();
         
@@ -212,17 +211,17 @@ public class DAO
             
             while(rs.next())
             {
-                dC.add((Character) rs.getObject("DISCOUNT_CODE"));
+                dC.add(rs.getString("DISCOUNT_CODE").charAt(0));
             }
             
         } catch (SQLException ex) {
-            //throw exception
+            throw new DAOException("DataBase Connection Failed.");
         }
         
         return dC;
     }
     
-    public List<String> getStates() //toTest
+    public List<String> getStates() throws DAOException //Returns all states currently populated by customers.
     {
         List<String> states = new ArrayList();
         
@@ -239,7 +238,7 @@ public class DAO
             
         } catch (SQLException ex)
         {
-            //Throw exception.
+            throw new DAOException("DataBase Connection Failed.");
         }
         
         return states;

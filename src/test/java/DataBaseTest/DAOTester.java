@@ -41,7 +41,7 @@ public class DAOTester
     }
     
     @Test
-    public void testOrderNomberTests()
+    public void testAllOrderNumber() throws DAOException
     {
         List<Integer> ON = myDAO.getAllOrderNumbers();
         assertEquals(ON.size(),15);
@@ -62,11 +62,53 @@ public class DAOTester
         assertEquals(myDAO.shipPrice(PID, quantity),2000.95*quantity,2000.95*quantity);
     }
     
+    @Test
+    public void testOrderNumbers() throws DAOException
+    {
+        int cID=1;
+        int size=2;
+        List test=myDAO.getOrderNumbers(cID);
+        assertEquals(test.size(),size);
+    }
+    
+    @Test
+    public void testProducts() throws DAOException
+    {
+        int size = 30;
+        List test = myDAO.getProduct();
+        for (int i=0; i<test.size();i++)
+        {
+            System.out.println(test.get(i));
+        }
+        assertEquals(test.size(), size);
+    }
+    
+    @Test
+    public void testCompany() throws DAOException 
+    {
+        List fcomp = myDAO.getFCompany();
+        assertEquals(fcomp.size(),7);
+    }
+    
+    @Test
+    public void testDiscountCodes() throws DAOException 
+    {
+        List dC = myDAO.getDiscountCode();
+        assertEquals(dC.size(),4);
+    }
+    
+    @Test
+    public void testStates() throws DAOException
+    {
+        List states = myDAO.getStates();
+        assertEquals(states.size(),6);
+    }
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Client Test. Click on the + sign on the left to edit the code.">
     
-    @Test public void testClientOrders() throws DAOException
+    /*@Test public void testClientOrders() throws DAOException
     {
         String clientLogin = "www.smallbill.example.com";
         String clientMDP = "3";
@@ -84,7 +126,7 @@ public class DAOTester
         //myDAO.editOrder(orderNum, "Learn Java in 1/2 hour", 1);
         //myDAO.deleteOrder(orderNum);
         //assertEquals(myDAO.getAllOrderNumbers().size(),befor);
-    }
+    }*/
     
     // </editor-fold>
     
