@@ -11,14 +11,9 @@
       function drawStuff() {
         var data = new google.visualization.arrayToDataTable([
           ['Zone Géographique', "Chiffre d'affaire"],
-          ["State 1", 1400],
-          ["State 2", 750],
-          ["State 3", 2200],
-          ["State 4", 720],
-          ["State 5", 640],
-          ["State 6", 1450],
-          ["State 7", 3100],
-          ["State 8", 780],
+            <c:forEach var="ca" items="${caState}">
+                ['${ca.nom}', ${ca.total}],
+            </c:forEach>
         ]);
 
         var options = {
