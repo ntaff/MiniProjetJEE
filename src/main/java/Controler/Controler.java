@@ -34,7 +34,7 @@ public class Controler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException, DAOException, SQLException 
     {
-        this.myDataSource = DataSourceFactory.getDataSource();
+        this.myDataSource = DataSourceFactoryUnit.getDataSource();
         this.myDAO = new DAO(this.myDataSource);
         response.setContentType("text/html;charset=UTF-8");
         // Partie client

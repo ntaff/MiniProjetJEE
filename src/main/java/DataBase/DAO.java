@@ -420,6 +420,67 @@ public class DAO
     
     // <editor-fold defaultstate="collapsed" desc="Admin DAO methods. Click on the + sign on the left to edit the code.">
     
+    //public void 
+    
+    public void editProduct(String Manufacturer, String ProductCode, float PurchaseCost, int Quantity, float markup, String Description)    //toTest
+    {
+        String sql = "UPDATE PRODUCT "
+                    + "SET MANUFACTURER_ID=?, PRODUCT_CODE=?, PURCHASE_COST=?, QUANTITY_ON_HAND=?, MARKUP=?, AVAILABLE=?"
+                    + "WHERE DESCRIPTION=?";
+        
+        int manID = this.ManToID(Manufacturer);
+        String available = "FALSE";
+        if (Quantity!=0)
+        {
+            available="TRUE";
+        }
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1, manID);
+            stmt.setString(2, ProductCode);
+            stmt.setFloat(3, PurchaseCost);
+            stmt.setInt(4, Quantity);
+            stmt.setFloat(5, markup);
+            stmt.setString(6, available);
+            stmt.setString(7, Description);
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+    }
+    
+    public ChiffreAff getChiffresAffairesClient(String clientName, String dateDeb, String dateFin) throws ParseException  //toTest
+    {
+        ChiffreAff cA = new ChiffreAff(clientName,0.f);
+        Date deb = dateFormat.parse(dateDeb);
+        Date fin = dateFormat.parse(dateFin);
+        
+        String sql = "SELECT PURCHASE_ORDER.SHIPPING_COST "
+                    + "FROM CUSTOMER INNER JOIN PURCHASE_ORDER ON CUSTOMER.CUSTOMER_ID=PURCHASE_ORDER.CUSTOMER_ID"
+                    + "WHERE CUSTOMER.NAME=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, clientName);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                cA.addToSales(rs.getFloat("SHIPPING_COST"));
+            }
+            
+        } catch (SQLException ex)
+        {
+            //Throw Exception.
+        }
+        
+        return cA;
+    }
+    
     public ChiffreAff getChiffresAffairesProduit(String produit, String dateDeb, String dateFin) throws DAOException, ParseException   //toTest
     {
         ChiffreAff cA = new ChiffreAff(produit,0.f);
@@ -476,58 +537,6 @@ public class DAO
         }
         
         return cA;
-    }
-    
-    public ChiffreAff getChiffresAffairesClient(String clientName, String dateDeb, String dateFin) throws ParseException  //toTest
-    {
-        ChiffreAff cA = new ChiffreAff(clientName,0.f);
-        Date deb = dateFormat.parse(dateDeb);
-        Date fin = dateFormat.parse(dateFin);
-        
-        String sql = "SELECT PURCHASE_ORDER.SHIPPING_COST "
-                    + "FROM CUSTOMER INNER JOIN PURCHASE_ORDER ON CUSTOMER.CUSTOMER_ID=PURCHASE_ORDER.CUSTOMER_ID"
-                    + "WHERE CUSTOMER.NAME=?";
-        
-        try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            stmt.setString(1, clientName);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next())
-            {
-                cA.addToSales(rs.getFloat("SHIPPING_COST"));
-            }
-            
-        } catch (SQLException ex)
-        {
-            //Throw Exception.
-        }
-        
-        return cA;
-    }
-    
-    
-    //for admin nom prod/qté/prixunit/fourn 
-    public void editProduct(String Manufacturer, String ProductCode, float PurchaseCost, int Quantity, float markup, String Description)
-    {
-        String sql = "UPDATE PRODUCT "
-                    + "SET MANUFACTURER_ID=?, PRODUCT_CODE=?, PURCHASE_COST=?, QUANTITY_ON_HAND=?, MARKUP=?, AVAILABLE=?"
-                    + "WHERE DESCRIPTION=?";
-        
-        
-        
-        try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            //transform manufacturer to ID
-            
-        } catch (SQLException ex) {
-            //throw exception
-        }
-        //get descriptionID
-        //calcul prodID
-        
-        //calcul available
     }
     
     // </editor-fold>
