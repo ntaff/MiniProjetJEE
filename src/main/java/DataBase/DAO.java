@@ -469,13 +469,11 @@ public class DAO
             stmt.setString(7, available);
             stmt.setString(8, Description);
             
+            stmt.executeUpdate();
+            
         } catch (SQLException ex) {
             //throw exception
         }
-        
-        //calc new ID
-        //get manID
-        //calc available
     }
     
     public void deleteProduct(String Description)   //toTest
