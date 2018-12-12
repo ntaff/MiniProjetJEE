@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,15 @@ public class Controle extends HttpServlet {
     private DataSource MyDataSource = DataSourceFactoryDeployed.getDataSource();
     private DAO myDAO = new DAO(MyDataSource);
     
-    
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     * @throws DAOException 
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, DAOException 
     {
@@ -57,28 +66,57 @@ public class Controle extends HttpServlet {
             showView("LoginPage.jsp", request, response);
         }
     }
-    
+    /**
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     * @throws DAOException 
+     */
     private void newConnection (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, DAOException
     {
-        HttpSession session = request.getSession();
             
         String user = request.getParameter("login");
         String mdp = request.getParameter("mdp");
-        System.out.print(user + " " + mdp);
-        System.out.print(myDAO.loginCheck("admin", "admin"));
-        System.out.print(myDAO.loginCheck(user, mdp));
-        
-        
-        
-        
+    
+        if (myDAO.loginCheck(user, mdp))
+        {
+           if (user.equals("admin"))
+           {
+               showView("AdminPage.jsp", request, response);
+           } else {
+               showView("ClientPage.html", request, response);
+           }
+        } else {
+            showView("LoginPage.jsp", request, response);
+            ServletContext context = getServletContext();
+            context.setAttribute("erreur", "mot de passe ou identifiant incorrect");
+        }
+            
     }
     
+    /**
+     * 
+     * @param request
+     * @param action
+     * @return 
+     */
     private boolean actionIs(HttpServletRequest request, String action)
     {
         return action.equals(request.getParameter("action"));
     }
     
+    /**
+     * 
+     * @param jsp
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     private void showView(String jsp, HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException
     {
