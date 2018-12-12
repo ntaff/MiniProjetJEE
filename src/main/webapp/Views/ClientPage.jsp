@@ -19,22 +19,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Coordonnées</h4>
+                    <h4>Coordonnées | <button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifierInfos" ><span class="glyphicon glyphicon-pencil"></span></button></h4>
                     <div class="table-responsive">
                         <table id="coord" class="table table-striped">
                             <thead>
-                                <th>Prénom</th>
                                 <th>Nom</th>
-                                <th>Date de naissance</th>
                                 <th>Adresse</th>
+                                <th>Téléphone</th>
+                                <th>E-mail</th>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>${prenom}</td>
-                                    <td>${prenom}</td>
-                                    <td>${datenaissance}</td>
-                                    <td>${adresse}</td>
-                                    <td><p data-placement="top" data-toggle="tooltip" title="Modifier"><button class="btn btn-primary btn-xs" data-title="Modifier" data-toggle="modal" data-target="#modifierInfos" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                    <td>${client.nom}</td>
+                                    <td>${client.adresse}</td>
+                                    <td>${client.num}</td>
+                                    <td>${client.mail}</td>     
                                 </tr>
                             </tbody>
                         </table>
@@ -75,7 +74,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="form-control " type="text" placeholder="Nom du produit">
+                          <label for="bon">Bon</label>
+                          <select id="selectbon"class="form-control" name="bon">
+                           <c:forEach var="bon" items="${bon}">
+                            <option value="0" >${bon.id}</option>
+                           </c:forEach>
+                          </select>
                         </div>
                         <div class="form-group">
                             <input class="form-control " type="text" placeholder="Quantité">
@@ -106,16 +110,16 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="form-control " type="text" placeholder="Prénom">
-                        </div>
-                        <div class="form-group">
                             <input class="form-control " type="text" placeholder="Nom">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Date de naissance">
+                            <input class="form-control " type="text" placeholder="Adresse">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Adresse">
+                            <input class="form-control" placeholder="Numérode téléphone">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Mail">
                         </div>
                     </div>
                         <div class="modal-footer ">

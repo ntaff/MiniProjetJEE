@@ -42,7 +42,8 @@
                             </c:forEach>
                             </tbody>
                         </table>
-                    </div>      
+                    </div> 
+                    
                     <hr>
                     <div id="chart" style="width: 900px; height: 500px;"></div>
                     <hr>
