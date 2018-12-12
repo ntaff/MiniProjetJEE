@@ -93,7 +93,13 @@ INSERT INTO DISCOUNT_CODE(DISCOUNT_CODE, RATE) VALUES
 ('N', 0.00);
 
 INSERT INTO MANUFACTURER(MANUFACTURER_ID, NAME, ADDRESSLINE1, ADDRESSLINE2, CITY, STATE, ZIP, PHONE, FAX, EMAIL, REP) VALUES 
-
+(19985678, 'Happy End Searching', '5 81st Street', 'Suite 100', 'Mountain View', 'CA', '94043', '650-555-0102', '408-555-0103', 'happysearching@example.com', 'John Snow'),
+(19986982, 'Smith Bird Watching', '4000 Finch Circle', 'Building 14', 'Santa Clara', 'CA', '95051', '650-555-0111', '408-555-0112', 'www.sbw@example.com', 'Brian Washington'),
+(19974892, 'Wilson Fish Co', '20959 Whalers Ave', 'Building 3', 'San Jose', 'OH', '95128', '650-555-0133', '408-555-0112', 'www.wilsonfish@example.com', 'Matthew Williams'),
+(19986196, 'James Deli', '250 Marinade Blvd', 'Suite C', 'Novato', 'IL', '94949', '650-555-0144', '408-555-0112', 'www.jdeli@example.com', 'Phil Jones'),
+(19978451, 'All Sushi', '399 San Pablo ave', 'Building 600', 'Cleveland', 'CA', '94530', '650-555-0140', '408-555-0112', 'www.allsuchi.com', 'Teresa Ho'),
+(19982461, 'Soft Cables', '9988 Main Upper Street', 'Suite 100', 'Indianapolis', 'IA', '46290', '650-555-0151', '408-555-0112', 'www.cbales@example.com', 'Henry Adams'),
+(19984899, 'Mike Recording Industries', '5109 Union Street Road', 'Building 8A', 'San Alfred', 'CA', '94123', '415-555-0166', '408-555-0112', 'www.mikerecording@example.com', 'Mike Black');
 
 INSERT INTO MICRO_MARKET(ZIP_CODE, RADIUS, AREA_LENGTH, AREA_WIDTH) VALUES 
 ('95051', 255.59, 689.856, 478.479),
