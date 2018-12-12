@@ -1,6 +1,7 @@
 package DataBase;
 
 import DataStructure.ChiffreAff;
+import DataStructure.Client;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,9 +34,39 @@ public class DAO
         this.date=new Date();
     }
     
-    //getclient nom,addresse,tel,mail
     
     // <editor-fold defaultstate="collapsed" desc="Shared DAO methods. Click on the + sign on the left to edit the code.">
+    
+    public Client getClientData(int customerID)
+    {
+        Client cl=null;
+        String sql = "SELECT NAME, ADDRESSLINE1, PHONE, EMAIL FROM CLIENT WHERE CUSTOMER_ID=?";
+        String name=null, addr=null, tel=null, mail=null;
+        
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1, customerID);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next())
+            {
+                name = rs.getString("NAME");
+                addr=rs.getString("ADDRESSLINE1");
+                tel=rs.getString("PHONE");
+                mail=rs.getString("EMAIL");
+                
+                cl = new Client(name,addr,tel,mail);
+            }
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+        
+        return cl;
+    }
     
     public List<Integer> getAllOrderNumbers() throws DAOException   //For DAO. Gets all orders.
     {
