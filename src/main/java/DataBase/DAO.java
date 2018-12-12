@@ -37,6 +37,29 @@ public class DAO
     
     // <editor-fold defaultstate="collapsed" desc="Shared DAO methods. Click on the + sign on the left to edit the code.">
     
+    public List<Integer> getAllOrderNumbers() throws DAOException   //For DAO. Gets all orders.
+    {
+        List<Integer> NumOrders = new ArrayList();
+        String sql = "Select ORDER_NUM FROM PURCHASE_ORDER";
+        
+        try (Connection connection = myDataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            try (ResultSet rs = stmt.executeQuery())
+            {
+                while(rs.next())
+                {
+                    NumOrders.add(rs.getInt("ORDER_NUM"));
+                }
+            }
+            
+        } catch (SQLException ex) {
+            throw new DAOException("DataBase Connection Failed.");
+        }
+        
+        return NumOrders;
+    }
+    
     public Client getClientData(int customerID)
     {
         Client cl=null;
@@ -66,29 +89,6 @@ public class DAO
         }
         
         return cl;
-    }
-    
-    public List<Integer> getAllOrderNumbers() throws DAOException   //For DAO. Gets all orders.
-    {
-        List<Integer> NumOrders = new ArrayList();
-        String sql = "Select ORDER_NUM FROM PURCHASE_ORDER";
-        
-        try (Connection connection = myDataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            try (ResultSet rs = stmt.executeQuery())
-            {
-                while(rs.next())
-                {
-                    NumOrders.add(rs.getInt("ORDER_NUM"));
-                }
-            }
-            
-        } catch (SQLException ex) {
-            throw new DAOException("DataBase Connection Failed.");
-        }
-        
-        return NumOrders;
     }
     
     public List<Character> getDiscountCode() throws DAOException    //Returns all the discount codes.
