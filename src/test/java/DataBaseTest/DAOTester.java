@@ -1,8 +1,6 @@
 package DataBaseTest;
 
-import DataBase.DAO;
-import DataBase.DAOException;
-import DataBase.DataSourceFactory;
+import DataBase.*;
 import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
@@ -22,7 +20,7 @@ public class DAOTester
     @Before
     public void setUp() throws SQLException 
     {
-        myDataSource = DataSourceFactory.getDataSource();
+        myDataSource = DataSourceFactoryUnit.getDataSource();
         myDAO=new DAO(myDataSource);
     }
     

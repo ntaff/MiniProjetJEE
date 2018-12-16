@@ -16,22 +16,17 @@
 
       function drawStuff() {
         var data = new google.visualization.arrayToDataTable([
-          ['Catégorie', "Chiffre d'affaire"],
-          ["Produit 1", 1400],
-          ["Produit 2", 750],
-          ["Produit 3", 2200],
-          ["Produit 4", 720],
-          ["Produit 5", 640],
-          ["Produit 6", 1450],
-          ["Produit 7", 3100],
-          ["Produit 8", 780],
+          ['Client', "Chiffre d'affaire"],
+            <c:forEach var="ca" items="${caClient}">
+                ['${ca.nom}', ${ca.total}],
+            </c:forEach>
         ]);
 
         var options = {
-          title: "Chiffre d'affaire par catégorie d'articles",
+          title: "Chiffre d'affaire par client",
           width: 900,
           legend: { position: 'none' },
-          chart: { title: "Chiffre d'affaire par catégorie d'articles",
+          chart: { title: "Chiffre d'affaire par client",
                    subtitle: 'Durant la periode [PERIODE]' },
           bars: 'horizontal', // Required for Material Bar Charts.
           axes: {
@@ -42,6 +37,6 @@
           bar: { groupWidth: "90%" }
         };
 
-        var chart = new google.charts.Bar(document.getElementById('chart'));
+        var chart = new google.charts.Bar(document.getElementById('client_chart'));
         chart.draw(data, options);
       };

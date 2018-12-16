@@ -1,6 +1,7 @@
 package DataBase;
 
 import DataStructure.ChiffreAff;
+import DataStructure.Client;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,32 +34,8 @@ public class DAO
         this.date=new Date();
     }
     
-    // <editor-fold defaultstate="collapsed" desc="Shared DAO methods. Click on the + sign on the left to edit the code.">
     
-    public boolean loginCheck(String Mail, String ID) throws DAOException   //Check if admin or Client.
-    {        
-        if(Mail==admin && ID==admin)
-        {
-            return true;
-        }
-        String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID=? and EMAIL=?";
-        
-        try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            stmt.setString(1, ID);
-            stmt.setString(2, Mail);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next())
-            {
-                return true;
-            }
-            
-        } catch (SQLException ex) {
-            throw new DAOException("DataBase Connection Failed.");
-        }
-        return false;
-    }
+    // <editor-fold defaultstate="collapsed" desc="Shared DAO methods. Click on the + sign on the left to edit the code.">
     
     public List<Integer> getAllOrderNumbers() throws DAOException   //For DAO. Gets all orders.
     {
@@ -83,48 +60,102 @@ public class DAO
         return NumOrders;
     }
     
-    public int OrdDescToNum(String desc) throws DAOException   //For DAO. Uses the product description then returns it's ID.
+    public Client getClientData(int customerID)
     {
-        int Num=0;
-        String sql ="SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION=?";
+        Client cl=null;
+        String sql = "SELECT NAME, ADDRESSLINE1, PHONE, EMAIL FROM CLIENT WHERE CUSTOMER_ID=?";
+        String name=null, addr=null, tel=null, mail=null;
+        
         
         try(Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
-            stmt.setString(1,desc);
+            stmt.setInt(1, customerID);
+            
             ResultSet rs = stmt.executeQuery();
+            
             if(rs.next())
             {
-                Num=rs.getInt("PRODUCT_ID");
+                name = rs.getString("NAME");
+                addr=rs.getString("ADDRESSLINE1");
+                tel=rs.getString("PHONE");
+                mail=rs.getString("EMAIL");
+                
+                cl = new Client(name,addr,tel,mail);
             }
             
-        }catch (SQLException ex) {
-            throw new DAOException("DataBase Connection Failed.");
+        } catch (SQLException ex) {
+            //throw exception
         }
         
-        return Num;
+        return cl;
     }
-
-    public float shipPrice(int PID, int quantity) throws DAOException   //For DAO. Computes the total price for the order. 
+    
+    public List<Character> getDiscountCode() throws DAOException    //Returns all the discount codes.
     {
-        float price=0;
-        String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID=?";
+        List<Character> dC = new ArrayList();
+        
+        String sql = "SELECT DISCOUNT_CODE FROM DISCOUNT_CODE";
         
         try(Connection connection = myDataSource.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
-            stmt.setInt(1,PID);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next())
+            
+            while(rs.next())
             {
-                price=rs.getFloat("PURCHASE_COST");
+                dC.add(rs.getString("DISCOUNT_CODE").charAt(0));
             }
             
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("DataBase Connection Failed.");
         }
         
-        return price*quantity;
+        return dC;
+    }
+    
+    public List<String> getFCompany() throws DAOException //Returns all the Freight Companies.
+    {
+        List<String> FC = new ArrayList();
+        
+        String sql = "SELECT DISTINCT FREIGHT_COMPANY FROM PURCHASE_ORDER";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next())
+            {
+                FC.add(rs.getString("FREIGHT_COMPANY"));
+            }
+            
+        } catch(SQLException ex){
+            throw new DAOException("DataBase Connection Failed.");
+        }
+        
+        return FC;
+    }
+    
+    public List<String> getManufacturerID() //toTest
+    {
+        List<String> mID = new ArrayList();
+        
+        String sql = "SELECT NAME FROM MANUFACTURER";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery())
+        {
+            while(rs.next())
+            {
+                mID.add(rs.getString("NAME"));
+            }
+            
+        } catch (SQLException ex) {
+            //Throw Excpetion
+        }
+        return mID;
     }
     
     public List<Integer> getOrderNumbers(int customerID) throws DAOException //Returns a list of orders available for a customer. 
@@ -174,50 +205,26 @@ public class DAO
         return P;
     }
     
-    public List<String> getFCompany() throws DAOException //Returns all the Freight Companies.
+    public List<String> getProductCodes() //toTest
     {
-        List<String> FC = new ArrayList();
+        List<String> pC = new ArrayList();
         
-        String sql = "SELECT DISTINCT FREIGHT_COMPANY FROM PURCHASE_ORDER";
+        String sql = "SELECT PROD_CODE FROM PRODUCT_CODE";
         
         try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
+            PreparedStatement stmt = connection.prepareStatement(admin))
         {
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next())
             {
-                FC.add(rs.getString("FREIGHT_COMPANY"));
-            }
-            
-        } catch(SQLException ex){
-            throw new DAOException("DataBase Connection Failed.");
-        }
-        
-        return FC;
-    }
-    
-    public List<Character> getDiscountCode() throws DAOException    //Returns all the discount codes.
-    {
-        List<Character> dC = new ArrayList();
-        
-        String sql = "SELECT DISCOUNT_CODE FROM DISCOUNT_CODE";
-        
-        try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next())
-            {
-                dC.add(rs.getString("DISCOUNT_CODE").charAt(0));
+                pC.add(rs.getString("PROD_CODE"));
             }
             
         } catch (SQLException ex) {
-            throw new DAOException("DataBase Connection Failed.");
+            //Throw exception.
         }
-        
-        return dC;
+        return pC;
     }
     
     public List<String> getStates() throws DAOException //Returns all states currently populated by customers.
@@ -241,6 +248,122 @@ public class DAO
         }
         
         return states;
+    }
+    
+    public boolean loginCheck(String Mail, String ID) throws DAOException   //Check if admin or Client.
+    {        
+        if(Mail==admin && ID==admin)
+        {
+            return true;
+        }
+        String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID=? and EMAIL=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, ID);
+            stmt.setString(2, Mail);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+            {
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            throw new DAOException("DataBase Connection Failed.");
+        }
+        return false;
+    }
+    
+    public int ManToID(String Manufacturer) //toTest
+    {
+        String sql = "SELECT MANUFACTURER_ID FROM MANUFACTURER WHERE NAME=?";
+        int ID = 0;
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, Manufacturer);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next())
+            {
+                ID = rs.getInt("MANUFACTURER_ID");
+            }
+            
+        } catch (SQLException ex) {
+            //throw Exception
+        }
+        return ID;
+    }
+    
+    public int newProdID()
+    {
+        int ID=0;
+        List<Integer> listID = new ArrayList();
+        String sql = "SELECT PRODUCT_ID FROM PRODUCT";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery())
+        {
+            while(rs.next())
+            {
+                listID.add(rs.getInt("PRODUCT_ID"));
+            }
+            
+            ID=Collections.max(listID)+1;
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+        
+        return ID;
+    }
+    
+    public int OrdDescToNum(String desc) throws DAOException   //For DAO. Uses the product description then returns it's ID.
+    {
+        int Num=0;
+        String sql ="SELECT PRODUCT_ID FROM PRODUCT WHERE DESCRIPTION=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1,desc);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next())
+            {
+                Num=rs.getInt("PRODUCT_ID");
+            }
+            
+        }catch (SQLException ex) {
+            throw new DAOException("DataBase Connection Failed.");
+        }
+        
+        return Num;
+    }
+
+    public float shipPrice(int PID, int quantity) throws DAOException   //For DAO. Computes the total price for the order. 
+    {
+        float price=0;
+        String sql = "SELECT PURCHASE_COST FROM PRODUCT WHERE PRODUCT_ID=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1,PID);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next())
+            {
+                price=rs.getFloat("PURCHASE_COST");
+            }
+            
+        }catch (SQLException ex) {
+            throw new DAOException("DataBase Connection Failed.");
+        }
+        
+        return price*quantity;
     }
     
     // </editor-fold>
@@ -353,6 +476,111 @@ public class DAO
     
     // <editor-fold defaultstate="collapsed" desc="Admin DAO methods. Click on the + sign on the left to edit the code.">
     
+    public void createProduct(String Manufacturer, String ProductCode, float PurchaseCost, int Quantity, float markup, String Description)
+    {
+        String sql ="INSERT INTO PRODUCT VALUES(?,?,?,?,?,?,?,?)";
+        int newID = this.newProdID();
+        int manID = this.ManToID(Manufacturer);
+        String available = "FALSE";
+        if(Quantity!=0)
+        {
+            available="TRUE";
+        }
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1, newID);
+            stmt.setInt(2, manID);
+            stmt.setString(3, ProductCode);
+            stmt.setFloat(4, PurchaseCost);
+            stmt.setInt(5, Quantity);
+            stmt.setFloat(6, markup);
+            stmt.setString(7, available);
+            stmt.setString(8, Description);
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+    }
+    
+    public void deleteProduct(String Description)   //toTest
+    {
+        String sql = "DELETE FROM PRODUCT WHERE DESCRIPTION=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, Description);
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+    }
+    
+    public void editProduct(String Manufacturer, String ProductCode, float PurchaseCost, int Quantity, float markup, String Description)    //toTest
+    {
+        String sql = "UPDATE PRODUCT "
+                    + "SET MANUFACTURER_ID=?, PRODUCT_CODE=?, PURCHASE_COST=?, QUANTITY_ON_HAND=?, MARKUP=?, AVAILABLE=?"
+                    + "WHERE DESCRIPTION=?";
+        
+        int manID = this.ManToID(Manufacturer);
+        String available = "FALSE";
+        if (Quantity!=0)
+        {
+            available="TRUE";
+        }
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setInt(1, manID);
+            stmt.setString(2, ProductCode);
+            stmt.setFloat(3, PurchaseCost);
+            stmt.setInt(4, Quantity);
+            stmt.setFloat(5, markup);
+            stmt.setString(6, available);
+            stmt.setString(7, Description);
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            //throw exception
+        }
+    }
+    
+    public ChiffreAff getChiffresAffairesClient(String clientName, String dateDeb, String dateFin) throws ParseException  //toTest
+    {
+        ChiffreAff cA = new ChiffreAff(clientName,0.f);
+        Date deb = dateFormat.parse(dateDeb);
+        Date fin = dateFormat.parse(dateFin);
+        
+        String sql = "SELECT PURCHASE_ORDER.SHIPPING_COST "
+                    + "FROM CUSTOMER INNER JOIN PURCHASE_ORDER ON CUSTOMER.CUSTOMER_ID=PURCHASE_ORDER.CUSTOMER_ID"
+                    + "WHERE CUSTOMER.NAME=?";
+        
+        try(Connection connection = myDataSource.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql))
+        {
+            stmt.setString(1, clientName);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next())
+            {
+                cA.addToSales(rs.getFloat("SHIPPING_COST"));
+            }
+            
+        } catch (SQLException ex)
+        {
+            //Throw Exception.
+        }
+        
+        return cA;
+    }
+    
     public ChiffreAff getChiffresAffairesProduit(String produit, String dateDeb, String dateFin) throws DAOException, ParseException   //toTest
     {
         ChiffreAff cA = new ChiffreAff(produit,0.f);
@@ -397,34 +625,6 @@ public class DAO
             PreparedStatement stmt = connection.prepareStatement(sql))
         {
             stmt.setString(1, state);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next())
-            {
-                cA.addToSales(rs.getFloat("SHIPPING_COST"));
-            }
-            
-        } catch (SQLException ex)
-        {
-            //Throw Exception.
-        }
-        
-        return cA;
-    }
-    
-    public ChiffreAff getChiffresAffairesClient(String clientName, String dateDeb, String dateFin) throws ParseException  //toTest
-    {
-        ChiffreAff cA = new ChiffreAff(clientName,0.f);
-        Date deb = dateFormat.parse(dateDeb);
-        Date fin = dateFormat.parse(dateFin);
-        
-        String sql = "SELECT PURCHASE_ORDER.SHIPPING_COST "
-                    + "FROM CUSTOMER INNER JOIN PURCHASE_ORDER ON CUSTOMER.CUSTOMER_ID=PURCHASE_ORDER.CUSTOMER_ID"
-                    + "WHERE CUSTOMER.NAME=?";
-        
-        try(Connection connection = myDataSource.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql))
-        {
-            stmt.setString(1, clientName);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
             {
