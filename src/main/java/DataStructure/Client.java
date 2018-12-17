@@ -17,4 +17,24 @@ public class Client
         this.Name=Nom;
         this.Phone=tel;
     }
+    
+    public String getAddress()
+    {
+        return this.Addr;
+    }
+    
+    public String getMail()
+    {
+        return this.Email;
+    }
+    
+    public String getName()
+    {
+        return this.Name;
+    }
+    
+    public String getPhone()
+    {
+        return this.Phone;
+    }
 }

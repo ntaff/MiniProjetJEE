@@ -1,6 +1,7 @@
 package DataBaseTest;
 
 import DataBase.*;
+import DataStructure.Client;
 import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
@@ -39,11 +40,67 @@ public class DAOTester
     }
     
     @Test
-    public void testAllOrderNumber() throws DAOException
+    public void testGetClientData() throws DAOException
     {
-        List<Integer> ON = myDAO.getAllOrderNumbers();
-        assertEquals(ON.size(),15);
+        int clientID=1;
+        String name="Jumbo Eagle Corp";
+        String tel="305-555-0188";
+        
+        Client client = myDAO.getClientData(clientID);
+        assertEquals(name, client.getName());
+        assertEquals(tel, client.getPhone());
     }
+    
+    @Test
+    public void testGetDiscountCodes() throws DAOException 
+    {
+        List dC = myDAO.getDiscountCode();
+        assertEquals(dC.size(),4);
+    }
+    
+    @Test
+    public void testGetCompany() throws DAOException 
+    {
+        List fcomp = myDAO.getFCompany();
+        assertEquals(fcomp.size(),7);
+    }
+    
+    @Test
+    public void testGetManufacturer() throws DAOException
+    {
+        int size=30;
+        List man = myDAO.getManufacturer();
+        assertEquals(size,man.size());
+    }
+    
+    @Test
+    public void testGetOrderNumbers() throws DAOException
+    {
+        int cID=1;
+        int size=2;
+        List test=myDAO.getOrderNumbers(cID);
+        assertEquals(test.size(),size);
+    }
+    
+    @Test
+    public void testGetProducts() throws DAOException
+    {
+        int size = 30;
+        List test = myDAO.getProduct();
+        for (int i=0; i<test.size();i++)
+        {
+            System.out.println(test.get(i));
+        }
+        assertEquals(test.size(), size);
+    }
+    
+    /*@Test
+    public void testGetProductsCodes() throws DAOException
+    {
+        int size=6;
+        List PC = myDAO.getProductCodes();
+        assertEquals(size,PC.size());
+    }*/
     
     @Test
     public void testDescToNum() throws DAOException
@@ -60,40 +117,11 @@ public class DAOTester
         assertEquals(myDAO.shipPrice(PID, quantity),2000.95*quantity,2000.95*quantity);
     }
     
-    @Test
-    public void testOrderNumbers() throws DAOException
-    {
-        int cID=1;
-        int size=2;
-        List test=myDAO.getOrderNumbers(cID);
-        assertEquals(test.size(),size);
-    }
     
-    @Test
-    public void testProducts() throws DAOException
-    {
-        int size = 30;
-        List test = myDAO.getProduct();
-        for (int i=0; i<test.size();i++)
-        {
-            System.out.println(test.get(i));
-        }
-        assertEquals(test.size(), size);
-    }
     
-    @Test
-    public void testCompany() throws DAOException 
-    {
-        List fcomp = myDAO.getFCompany();
-        assertEquals(fcomp.size(),7);
-    }
     
-    @Test
-    public void testDiscountCodes() throws DAOException 
-    {
-        List dC = myDAO.getDiscountCode();
-        assertEquals(dC.size(),4);
-    }
+    
+    
     
     @Test
     public void testStates() throws DAOException

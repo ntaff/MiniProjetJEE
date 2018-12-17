@@ -140,7 +140,7 @@ public class Controle extends HttpServlet {
      * @param response 
      */
     public void infoClient(int IdClient, HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException
+            throws ServletException, IOException, DAOException
     {
         Client clientData = myDAO.getClientData(IdClient);
         // Comment lire client ?? 

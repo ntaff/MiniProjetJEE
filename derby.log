@@ -1,13 +1,14 @@
+Mon Dec 17 16:22:16 GMT 2018 : Apache Derby Network Server - 10.11.1.2 - (1629631) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue Dec 11 15:30:28 CET 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-0167-9dad-2118-00000e391378 
-on database directory /Users/camilleclaret/NetBeansProjects/MiniProjetJEE/embedded_sample with class loader sun.misc.Launcher$AppClassLoader@7d4991ad 
-Loaded from file:/Users/camilleclaret/.m2/repository/org/apache/derby/derby/10.14.1.0/derby-10.14.1.0.jar
+Mon Dec 17 16:22:17 GMT 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0167-bcf9-9470-ffffdc5ed65b 
+on database directory C:\Users\Gregory\Documents\NetBeansProjects\MiniProjetJEE\sample with class loader sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_151/db/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_161-b12
-user.dir=/Users/camilleclaret/NetBeansProjects/MiniProjetJEE
-os.name=Mac OS X
-os.arch=x86_64
-os.version=10.14.1
-derby.system.home=null
+java.runtime.version=1.8.0_151-b12
+user.dir=C:\Program Files\Java\jdk1.8.0_151\db
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=C:\Users\Gregory\Documents\NetBeansProjects\MiniProjetJEE
 Database Class Loader started - derby.database.classpath=''
