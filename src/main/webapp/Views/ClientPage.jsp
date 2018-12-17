@@ -27,13 +27,15 @@
                                 <th>Adresse</th>
                                 <th>Téléphone</th>
                                 <th>E-mail</th>
+                                <th>Zone Géographique</th>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>${client.nom}</td>
                                     <td>${client.adresse}</td>
                                     <td>${client.num}</td>
-                                    <td>${client.mail}</td>     
+                                    <td>${client.mail}</td>
+                                    <td>${client.state}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -110,13 +112,13 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="form-control " type="text" placeholder="Nom">
+                            <input class="form-control " type="text" placeholder="Zone Géographique">
                         </div>
                         <div class="form-group">
                             <input class="form-control " type="text" placeholder="Adresse">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" placeholder="Numérode téléphone">
+                            <input class="form-control" placeholder="Numéro de téléphone">
                         </div>
                         <div class="form-group">
                             <input class="form-control" placeholder="Mail">
@@ -167,7 +169,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nomproduit">Nom du produit</label>
-                            <select id="nomproduit"class="form-control" name="nomproduit">
+                            <select id="selectnomproduit"class="form-control" name="nomproduit">
                            <c:forEach var="prod" items="${produit}">
                             <option value="0" >${prod.id}</option>
                            </c:forEach>
