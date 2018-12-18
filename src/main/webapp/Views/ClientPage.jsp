@@ -31,11 +31,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>${client.nom}</td>
-                                    <td>${client.adresse}</td>
-                                    <td>${client.num}</td>
-                                    <td>${client.mail}</td>
-                                    <td>${client.state}</td>
+                                    <td>Georges II</td>
+                                    <td>42 rue de Paris</td>
+                                    <td>0770458574</td>
+                                    <td>georges2@gmail.com</td>
+                                    <td>CO</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -53,10 +53,10 @@
                             <tbody>
                             <c:forEach var="prod" items="${produitsclient}">
                                 <tr>
-                                    <td>${prod.id}</td>
-                                    <td>${prod.quantite}</td>
-                                    <td>${prod.prix}</td>
-                                    <td>${prod.fournisseur}</td>
+                                    <td>Trombones</td>
+                                    <td>12</td>
+                                    <td>45£</td>
+                                    <td>La Poste</td>
                                 </tr>
                             </c:forEach>
                             </tbody>

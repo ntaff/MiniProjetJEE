@@ -34,10 +34,10 @@
                             <tbody>
                             <c:forEach var="prod" items="${produitsadmin}">
                                 <tr>
-                                    <td>${prod.id}</td>
-                                    <td>${prod.quantite}</td>
-                                    <td>${prod.prix}</td>
-                                    <td>${prod.fournisseur}</td>
+                                    <td>Trombones</td>
+                                    <td>12</td>
+                                    <td>45£</td>
+                                    <td>La Poste</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
