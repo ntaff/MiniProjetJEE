@@ -5,71 +5,39 @@
 /* global google */
 
 // Load google charts
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-        var data = new google.visualization.arrayToDataTable([
-          ['Zone Géographique', "Chiffre d'affaire"],
-            <c:forEach var="ca" items="${caState}">
-                ['${ca.nom}', ${ca.total}],
-            </c:forEach>
-        ]);
-
-        var options = {
-          title: "Chiffre d'affaire par zone géographique",
-          width: 900,
-          legend: { position: 'none' },
-          chart: { title: "Chiffre d'affaire par zone géographique",
-                   subtitle: 'Durant la periode [PERIODE]' },
-          bars: 'horizontal', // Required for Material Bar Charts.
-          axes: {
-            x: {
-              0: { side: 'top', label: "Chiffre d'affaire en €"} // Top x-axis.
+            google.charts.load('current', {
+                'packages': ['geochart'],
+                'mapsApiKey': 'AIzaSyBIJMcD8XxmKegQZQM1CE7mDhzGDgpuAI0'
+            });
+            google.charts.setOnLoadCallback(drawRegionsMap);
+            function drawRegionsMap() {
+                var data = google.visualization.arrayToDataTable([
+                    ['States', "Chiffre d'affaire"],
+                    ['CO', 900],
+                    ['NM', 3500],
+                    ['NY', 4000],
+                    ['AZ', 1250],
+                    ['AR', 2400],
+                    ['MS', 1700],
+                    ['NH', 1900],
+                    ['WA', 2100],
+                    ['IL', 1700],
+                    ['MT', 1900],
+                    ['ND', 2100],
+                    ['KS', 1900],
+                    ['VA', 2100],
+                    
+          /*  <c:forEach var="ca" items="${chiffresZone}">
+                    ['${ca.nom}', ${ca.total}],
+            </c:forEach> */
+                ]);
+                var options2 = {
+                    title: "Chiffre d'affaire par zone géographique",
+                    width: 900, 
+                    height: 500, 
+                    region: "US", 
+                    resolution: "provinces",
+                    backgroundColor: '#FFFFF'};
+                var chart = new google.visualization.GeoChart(document.getElementById('geochart'));
+                chart.draw(data, options2);
             }
-          },
-          bar: { groupWidth: "90%" }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('geochart'));
-        chart.draw(data, options);
-      };
-
-
-
-/*
-     google.charts.load('current', {
-       'packages': ['geochart'],
-       'mapsApiKey': 'AIzaSyBIJMcD8XxmKegQZQM1CE7mDhzGDgpuAI0'
-     });
-     google.charts.setOnLoadCallback(drawMarkersMap);
-
-      function drawMarkersMap() {
-      var data = new google.visualization.DataTable();
-
-        data.addColumn('number', 'Lat');                                
-        data.addColumn('number', 'Long');
-        //data.addColumn({type:'string', role:'Zip'});
-        data.addColumn({type:'string', role:'CA'});                        
-
-       data.addRows([[37.337842, -121.898454,'CA']]); //Californie
-       data.addRows([[39.960608, -82.998998,'CA']]); //Ohio
-       data.addRows([[41.876369, -87.626709,'CA']]); //Illinois
-       data.addRows([[41.577927, -93.623050,'CA']]); //Iowa
-       data.addRows([[37.540095, -77.436921,'CA']]); //Virginie
-       data.addRows([[42.333550, -71.063662,'CA']]); // Massachussets
-       data.addRows([[38.903507, -77.036618,'CA']]);
-       data.addRows([[40.709369, -74.007113,'CA']]);
-       data.addRows([[36.170276, -85.140559,'CA']]);
-       data.addRows([[33.444510, -102.080303,'CA']]);
-       data.addRows([[45.782540, -101.501188,'CA']]);
-
-      var options = {
-        region: 'US',
-        displayMode: 'markers',
-        colorAxis: {colors: ['yellow', 'red']}
-      };
-
-      var chart = new google.visualization.GeoChart(document.getElementById('geo_chart'));
-      chart.draw(data, options);
-    }; */

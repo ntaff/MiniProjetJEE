@@ -17,9 +17,13 @@
       function drawStuff() {
         var data = new google.visualization.arrayToDataTable([
           ['Catégorie', "Chiffre d'affaire"],
-        <c:forEach var="ca" items="${caCat}">
+          ['Catégorie 1', 6500],
+          ['Catégorie 2', 8500],
+          ['Catégorie 3', 4000],
+          ['Catégorie 4', 5000],
+       /* <c:forEach var="ca" items="${caCat}">
             ['${ca.nom}', ${ca.total}],
-        </c:forEach>
+        </c:forEach> */
         ]);
 
         var options = {
