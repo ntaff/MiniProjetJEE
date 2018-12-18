@@ -9,7 +9,7 @@
     <head>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="Css/LoginPage.css">
+        <link rel="stylesheet" type="text/css" href="../Css/LoginPage.css">
         <link rel="stylesheet" type="text/css" href="Css/bootstrap.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Connexion</title>
