@@ -64,7 +64,6 @@ public class Controle extends HttpServlet {
         
         if (actionIs(request, "Connexion"))
         {
-            System.out.println("cc");
             newConnection(request,response);
         } else {
             showView("LoginPage.jsp", request, response);
