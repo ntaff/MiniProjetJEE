@@ -45,40 +45,20 @@
                     </div> 
                     
                     <hr>
-                    <p> Date de Début </p>
-                            <div class="form-group">
-                                <div class='input-group date' id='datetimepicker2'>
-                                    <input type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#datetimepicker2').datetimepicker({
-                                    locale: 'fr'
-                                });
-                            });
-                        </script>
+                       <div class="form-group row">
+                           <label for="example-date-input" class="col-2 col-form-label">Date de Début</label>
+                               <div class="col-10">
+                                  <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+                               </div>
+                        </div>
                         
-                        <p> Date de Fin </p>
-                        
-                                <div class="form-group">
-                                <div class='input-group date' id='datetimepicker2'>
-                                    <input type='text' class="form-control" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
+                         <div class="form-group row">
+                            <label for="example-date-input" class="col-2 col-form-label">Date de Fin</label>
+                            <div class="col-10">
+                              <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
                             </div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('#datetimepicker2').datetimepicker({
-                                    locale: 'fr'
-                                });
-                            });
-                        </script>
+                         </div>
+                    
                         <hr>
                     <div id="chart" style="width: 900px; height: 500px;"></div>
                     <hr>
